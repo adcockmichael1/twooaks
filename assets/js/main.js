@@ -128,40 +128,6 @@
     return n
   }
 
-  // card 01 — blueprint grid
-  $$('.bp-grid').forEach(g => {
-    for (let k = 0; k <= 200; k += 10) {
-      el('line', { x1: k, y1: 0, x2: k, y2: 200 }, g)
-      el('line', { x1: 0, y1: k, x2: 200, y2: k }, g)
-    }
-  })
-
-  // card 04 — a sapling reaching for page one
-  $$('[data-sprout]').forEach(svg => {
-    const r = rng(23)
-    const grow = (x, y, ang, len, depth, w) => {
-      const x2 = x + Math.cos(ang) * len, y2 = y + Math.sin(ang) * len
-      const cx = (x + x2) / 2 + (r() - 0.5) * len * 0.4, cy = (y + y2) / 2 + (r() - 0.5) * len * 0.3
-      const p = el('path', { d: `M${x.toFixed(1)} ${y.toFixed(1)} Q${cx.toFixed(1)} ${cy.toFixed(1)} ${x2.toFixed(1)} ${y2.toFixed(1)}`, class: 'br', pathLength: 1, 'stroke-width': w }, svg)
-      p.style.setProperty('--depth', depth)
-      if (depth >= 4) {
-        for (let k = 0; k < 3; k++) {
-          const lf = el('ellipse', { cx: (x2 + (r() - .5) * 12).toFixed(1), cy: (y2 + (r() - .5) * 12).toFixed(1), rx: 3.2 + r() * 2.4, ry: 2 + r() * 1.4, class: 'lf', transform: `rotate(${(r() * 180).toFixed(0)} ${x2.toFixed(1)} ${y2.toFixed(1)})` }, svg)
-          lf.style.setProperty('--depth', depth); lf.style.setProperty('--o', (0.45 + r() * 0.5).toFixed(2))
-        }
-        return
-      }
-      const n = depth === 0 ? 2 : 2 + (r() > 0.6 ? 1 : 0)
-      for (let k = 0; k < n; k++) {
-        const spread = 0.5 + r() * 0.35
-        const a = ang + (k - (n - 1) / 2) * spread + (r() - 0.5) * 0.25
-        grow(x2, y2, a, len * (0.68 + r() * 0.12), depth + 1, Math.max(0.6, w * 0.66))
-      }
-    }
-    el('path', { d: 'M40 190 C80 182 120 182 160 190', class: 'br', pathLength: 1, 'stroke-width': 1, style: '--depth:0;opacity:.5' }, svg)
-    grow(100, 188, -Math.PI / 2, 52, 0, 3.2)
-  })
-
   // the two oaks — the two boys, grown side by side on scroll, the cross between them
   const oaks = $('#oaks')
   const oakGroups = []
@@ -343,8 +309,39 @@
       if (!e.isIntersecting) continue
       e.target.classList.add('is-in')
       io.unobserve(e.target)
+      if (e.target.classList.contains('card')) playMock(e.target)
     }
   }, { threshold: 0.2, rootMargin: '0px 0px -8% 0px' })
+  /* the live mockups in the "getting found" cards: the search query types
+     itself out, the like counter ticks up (final values at once under reduced motion) */
+  function playMock(card) {
+    // wait for the card's own blur-in to settle so the visitor sees the whole show
+    setTimeout(() => runMock(card), REDUCED ? 0 : 750)
+  }
+  function runMock(card) {
+    const mock = $('.mock', card)
+    if (mock) mock.classList.add('is-playing')
+    const q = $('.mse-q', card)
+    if (q) {
+      const text = q.dataset.type || ''
+      if (REDUCED) q.textContent = text
+      else text.split('').forEach((c, i) => setTimeout(() => { q.textContent += c }, 400 + i * 55))
+    }
+    const n = $('[data-count-to]', card)
+    if (n) {
+      const to = +n.dataset.countTo
+      if (REDUCED) { n.textContent = to; return }
+      setTimeout(() => {
+        const s0 = performance.now(), dur = 1600
+        const tick = t => {
+          const k = clamp((t - s0) / dur)
+          n.textContent = Math.round(to * (1 - Math.pow(1 - k, 3)))
+          if (k < 1) requestAnimationFrame(tick)
+        }
+        requestAnimationFrame(tick)
+      }, 1450)
+    }
+  }
   $$('[data-reveal], [data-split], .footer__mark').forEach(n => { if (!n.closest('.hero')) io.observe(n) })
 
   /* =====================================================================

@@ -94,6 +94,8 @@ const DAMP = 3.2
 const TURN_BASE = 12
 const TURN_HOLD = 28
 const TURN_SMOOTH = 48
+/** Two Oaks: the sample spacing (design px) the turn windows above were tuned for. */
+const REF_STEP = 5
 const TURN_OPEN = 1e4
 /** Far enough that the reveal head no longer hides anything. */
 const REVEALED = 1e7
@@ -305,7 +307,7 @@ const arms = (side, meetY) => [
   { ...A, x: 0.875, y: 0.45, z: -0.3 },
   { ...L, x: side, y: 0.05, z: 0, pinch: 0.5 },
   { ...B, x: side - 0.015, y: 0.5, z: 0, pinch: 0.6 },
-  { ...B, x: side - 0.14, y: meetY - 0.45, z: 0, pinch: 0.75 },   // ease the turn in under the buttons
+  { ...B, x: side - 0.07, y: meetY - 0.9, z: 0, pinch: 0.7 },    // start the turn early: a wide, round sweep under the buttons
   { ...B, x: 0.5, y: meetY, z: 0, pinch: 1 },
 ]
 const mirror = (path) => path.map((p) => ({ ...p, x: 1 - p.x }))
@@ -320,15 +322,6 @@ const HERO = {
   1024: arms(0.93, 2.4),
   768: PHONE_ARMS,
   390: PHONE_ARMS,
-}
-/** The left arm, per frame: the mirror of the right arm, plus one short step
-    past the meeting point along the main stream's heading, so it dissolves
-    into the main stream instead of stopping. */
-const BRANCH = {
-  1440: [...mirror(HERO[1440]), { ...B, x: 0.55, y: 3.2, z: -0.1 }],
-  1024: [...mirror(HERO[1024]), { ...B, x: 0.55, y: 3.2, z: -0.1 }],
-  768: [...mirror(PHONE_ARMS), { ...B, x: 0.55, y: 2.15, z: -0.1 }],
-  390: [...mirror(PHONE_ARMS), { ...B, x: 0.55, y: 2.15, z: -0.1 }],
 }
 /** Below the hero, shared by every frame: wide bends down the page, through
     the cross between the two oaks, and out through the left edge above the
@@ -350,12 +343,22 @@ const TAIL = [
   { at: "values", x: 0.5, y: 0.8, z: 0 },
   { at: "values", x: -0.49, y: 1.02, z: 0 },
 ]
-const PATH = {
-  1440: [...HERO[1440], ...TAIL],
-  1024: [...HERO[1024], ...TAIL],
-  768: [...HERO[768], ...TAIL],
-  390: [...HERO[390], ...TAIL],
+/** The two arms, per frame. Both are their own spines, built the same way and
+    mirrored, so they are exactly symmetrical: each comes out of its oak, down
+    its side, curves in to the meeting point and runs a short way straight down
+    from it, fading out as the main stream takes over. */
+const below = (p, dy) => ({ ...p, y: p.y + dy, pinch: 0.9 })
+const MEET_DROP = { 1440: 1.6, 1024: 1.6, 768: 0.7, 390: 0.7 }
+const RIGHT_ARM = {}, LEFT_ARM = {}, MAIN = {}
+for (const f of [1440, 1024, 768, 390]) {
+  const meet = HERO[f][HERO[f].length - 1]
+  const after = below(meet, MEET_DROP[f])
+  RIGHT_ARM[f] = [...HERO[f], after]
+  LEFT_ARM[f] = mirror(RIGHT_ARM[f])
+  /* the main stream is born at the meeting point and carries on down the page */
+  MAIN[f] = [meet, after, ...TAIL]
 }
+const PATH = MAIN
 /** Relay offset its form 200/1440 right of the waypoints; this path is drawn
     for a full-width column, so no shift. */
 const SHIFT = 0
@@ -595,11 +598,12 @@ if (canvas && !R.isBot()) whenBuildable(() => {
         this.lines.frustumCulled = false
         this.scene.add(this.lines, this.points)
 
-        /* Two Oaks: the left arm. Its own spine texture and draws; every look
-           uniform is the main stream's object by reference, so time, colour,
-           size and parallax stay in step. Only the curve-bound values are its own. */
-        this.branch = this.makeBranch()
-        this.scene.add(this.branch.lines, this.branch.points)
+        /* Two Oaks: the two arms (right, then left — mirrored). Each has its own
+           spine texture and draws; every look uniform is the main stream's object
+           by reference, so time, colour, size and parallax stay in step. Only the
+           curve-bound values are their own. */
+        this.branches = [this.makeBranch(false), this.makeBranch(true)]
+        for (const b of this.branches) this.scene.add(b.lines, b.points)
 
         this.composer = new EffectComposer(this.renderer)
         this.composer.addPass(new RenderPass(this.scene, this.camera))
@@ -610,12 +614,12 @@ if (canvas && !R.isBot()) whenBuildable(() => {
       }
 
       /** The second spine (Two Oaks): same shaders, own curve, own draws. */
-      makeBranch() {
+      makeBranch(mirrored) {
         const data = new Float32Array(SAMPLES * 2 * 4)
         const tex = new DataTexture(data, SAMPLES, 2, RGBAFormat, FloatType)
         tex.magFilter = NearestFilter
         tex.minFilter = NearestFilter
-        const own = { uCurve: { value: tex }, uLen: { value: 1 }, uFadeOut: { value: 260 }, uRevealPx: { value: 0 } }
+        const own = { uCurve: { value: tex }, uLen: { value: 1 }, uFadeIn: { value: 380 }, uFadeOut: { value: 120 }, uRevealPx: { value: 0 } }
         const opts = { blending: AdditiveBlending, transparent: true, depthTest: false, depthWrite: false }
         const pointsMat = new ShaderMaterial({
           ...opts,
@@ -629,8 +633,16 @@ if (canvas && !R.isBot()) whenBuildable(() => {
           vertexShader: LINES_VERT,
           fragmentShader: LINES_FRAG,
         })
-        const points = new Points(this.buildPoints(0x0a4c5e), pointsMat)
-        const lines = new LineSegments(this.buildLines(0x7e0a), linesMat)
+        /* the same seeds for both arms, offsets mirrored on the left: a true mirror image */
+        const pg = this.buildPoints(0x0a4c5e), lg = this.buildLines(0x7e0a)
+        if (mirrored) {
+          const off = pg.getAttribute("aOff").array
+          for (let i = 0; i < off.length; i += 2) off[i] = -off[i]
+          const st = lg.getAttribute("aStrand").array
+          for (let i = 0; i < st.length; i += 4) st[i] = -st[i]
+        }
+        const points = new Points(pg, pointsMat)
+        const lines = new LineSegments(lg, linesMat)
         points.frustumCulled = false
         lines.frustumCulled = false
         return { data, tex, own, pointsMat, linesMat, points, lines, path: [], length: 0 }
@@ -713,25 +725,27 @@ if (canvas && !R.isBot()) whenBuildable(() => {
           this.shared.uFadeOut.value = Math.min(length / 4, 400 * this.unit)
           this.pointsMat.uniforms.uFlow.value = (CONFIG.flowPx * this.unit) / length
         }
-        /* the left arm: a short fade at its end, so it melts into the knot */
-        const b = this.branch
-        b.length = this.bakeInto(b.path, b.data, b.tex)
-        b.points.visible = b.lines.visible = b.length > 0
-        if (b.length) {
+        /* the arms: a long fade-in out of the canopy, a short fade-out just past the meet */
+        for (const b of this.branches) {
+          b.length = this.bakeInto(b.path, b.data, b.tex)
+          b.points.visible = b.lines.visible = b.length > 0
+          if (!b.length) continue
           b.own.uLen.value = b.length
-          b.own.uFadeOut.value = Math.min(b.length / 4, 260 * this.unit)
+          b.own.uFadeIn.value = 380 * this.unit
+          b.own.uFadeOut.value = 90 * this.unit
           b.pointsMat.uniforms.uFlow.value = (CONFIG.flowPx * this.unit) / b.length
         }
         this.rangeBranch()
       }
       /** The arm carries the same particle density per px as the main stream. */
       rangeBranch() {
-        const b = this.branch
         const share = this.tier === "low" ? CONFIG.lowShare : 1
-        const ratio = b.length && this.shared.uLen.value > 1 ? b.length / this.shared.uLen.value : 0.15
-        b.points.geometry.setDrawRange(0, Math.floor(CONFIG.particles * share * Math.min(1, Math.max(0.08, ratio))))
         const strands = Math.ceil(CONFIG.strands * (this.tier === "low" ? 0.6 : 1))
-        b.lines.geometry.setDrawRange(0, strands * SEGMENTS * 2)
+        for (const b of this.branches) {
+          const ratio = b.length && this.shared.uLen.value > 1 ? b.length / this.shared.uLen.value : 0.15
+          b.points.geometry.setDrawRange(0, Math.floor(CONFIG.particles * share * Math.min(1, Math.max(0.08, ratio))))
+          b.lines.geometry.setDrawRange(0, strands * SEGMENTS * 2)
+        }
       }
       /** One spine through its waypoints → its float texture; returns its length (0 if none). */
       bakeInto(path, data, tex) {
@@ -748,11 +762,15 @@ if (canvas && !R.isBot()) whenBuildable(() => {
           angles.push(Math.atan2(tangent.y, tangent.x))
         }
         const step = length / (SAMPLES - 1)
+        /* Two Oaks: measure turns over the same DISTANCE on every spine, not the same sample
+           count — on the short left arm 12 samples was ~8px, which made its bends kink */
+        const k = Math.max(1, Math.round((REF_STEP * this.unit) / step))
+        const tBase = TURN_BASE * k, tHold = TURN_HOLD * k, tSmooth = TURN_SMOOTH * k
         const at = (i) => Math.min(SAMPLES - 1, Math.max(0, i))
         const radius = angles.map((_, i) => {
-          let turn = Math.abs(angles[at(i + TURN_BASE)] - angles[at(i - TURN_BASE)])
+          let turn = Math.abs(angles[at(i + tBase)] - angles[at(i - tBase)])
           if (turn > Math.PI) turn = 2 * Math.PI - turn
-          const r = (2 * TURN_BASE * step) / Math.max(1e-4, turn)
+          const r = (2 * tBase * step) / Math.max(1e-4, turn)
           return Math.min(TURN_OPEN, r / this.unit)
         })
         const slideMin = (values, reach) => values.map((_, i) => {
@@ -765,7 +783,7 @@ if (canvas && !R.isBot()) whenBuildable(() => {
           for (let j = i - reach; j <= i + reach; j++) sum += values[at(j)]
           return sum / (2 * reach + 1)
         })
-        const held = slideMean(slideMean(slideMin(radius, TURN_HOLD), TURN_SMOOTH), TURN_SMOOTH)
+        const held = slideMean(slideMean(slideMin(radius, tHold), tSmooth), tSmooth)
         angles.forEach((angle, i) => { data.set([-Math.sin(angle), Math.cos(angle), held[i], 0], (SAMPLES + i) * 4) })
         const peaks = path.filter(({ pinch }) => pinch > 0).map(({ x, y, pinch }) => {
           let best = 0, bestD = Infinity
@@ -791,7 +809,7 @@ if (canvas && !R.isBot()) whenBuildable(() => {
         this.shared.uColDeep.value.set(colors.colDeep)
         this.shared.uColSpark.value.set(colors.colSpark)
       }
-      setPath(path, branchPath = []) { this.path = path; this.branch.path = branchPath; this.bakeCurve() }
+      setPath(path, branchPaths = []) { this.path = path; this.branches.forEach((b, i) => { b.path = branchPaths[i] || [] }); this.bakeCurve() }
       /** Device tier: DPR and draw ranges only — never a define or a rebuild. */
       retune(tier) {
         this.tier = tier
@@ -818,8 +836,9 @@ if (canvas && !R.isBot()) whenBuildable(() => {
         this.unit = parseFloat(getComputedStyle(document.documentElement).fontSize) / 16
         this.pointsMat.uniforms.uScale.value = this.unit * dpr
         this.shared.uPx.value = this.unit / (this.height / 2)
-        /* Two Oaks: a long fade-in (Relay: 120) so each arm materialises out of an oak canopy */
-        this.shared.uFadeIn.value = 380 * this.unit
+        /* Two Oaks: the main stream is born at the meeting point, so a short fade-in
+           there (the arms carry their own long fade-in out of the oak canopies) */
+        this.shared.uFadeIn.value = 60 * this.unit
         const lines = this.linesMat.uniforms
         lines.uLineWavelength.value = CONFIG.lineWavelength * this.unit
         lines.uPulseSpacing.value = CONFIG.pulseSpacing * this.unit
@@ -860,10 +879,15 @@ if (canvas && !R.isBot()) whenBuildable(() => {
         this.camera.position.set(-this.look.x * CONFIG.parallax, this.look.y * CONFIG.parallax, CAM_Z)
         this.camera.lookAt(0, 0, 0)
         const t = this.revealStart < 0 ? 0 : Math.min(1, (now - this.revealStart) / CONFIG.revealMs)
-        this.shared.uRevealPx.value = t >= 1 ? REVEALED : easeOut(t) * CONFIG.revealPx * this.unit
-        /* both arms draw in from their tops at once, so they meet on screen */
-        this.branch.own.uRevealPx.value = this.shared.uRevealPx.value
-        if (this.branch.length) this.branch.pointsMat.uniforms.uScrollU.value = (this.scrollPx / this.branch.length) % 1
+        const head = easeOut(t) * CONFIG.revealPx * this.unit
+        /* both arms draw in from their oaks at once and meet on screen; the main
+           stream's head follows on from the meeting point */
+        let armLen = 0
+        for (const b of this.branches) {
+          b.own.uRevealPx.value = t >= 1 ? REVEALED : head
+          if (b.length) { armLen = Math.max(armLen, b.length); b.pointsMat.uniforms.uScrollU.value = (this.scrollPx / b.length) % 1 }
+        }
+        this.shared.uRevealPx.value = t >= 1 ? REVEALED : head - armLen * 0.94
         this.shared.uTime.value = now / 1000
         this.shared.uTimeS.value = (now / 1000) % 1000
         this.shared.uView.value.set(this.width / 2, this.height / 2, this.scrollY)
@@ -876,9 +900,10 @@ if (canvas && !R.isBot()) whenBuildable(() => {
       dispose() {
         this.points.geometry.dispose(); this.lines.geometry.dispose()
         this.pointsMat.dispose(); this.linesMat.dispose(); this.curve.dispose()
-        const b = this.branch
-        b.points.geometry.dispose(); b.lines.geometry.dispose()
-        b.pointsMat.dispose(); b.linesMat.dispose(); b.tex.dispose()
+        for (const b of this.branches) {
+          b.points.geometry.dispose(); b.lines.geometry.dispose()
+          b.pointsMat.dispose(); b.linesMat.dispose(); b.tex.dispose()
+        }
         this.bloom.dispose(); this.composer.dispose(); this.renderer.dispose()
       }
     }
@@ -904,7 +929,7 @@ if (canvas && !R.isBot()) whenBuildable(() => {
       cancelAnimationFrame(placeRaf)
       placeRaf = requestAnimationFrame(() => {
         const frame = R.frame()
-        scene.setPath(resolvePath(PATH[frame], main), resolvePath(BRANCH[frame] || [], main))
+        scene.setPath(resolvePath(PATH[frame], main), [resolvePath(RIGHT_ARM[frame], main), resolvePath(LEFT_ARM[frame], main)])
         if (reduce.matches) scene.render(STILL_MS)
       })
     }
