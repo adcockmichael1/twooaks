@@ -4,8 +4,10 @@
    the waypoints (anchored to this page's sections), a small shim for the
    template's page runtime, and — at the client's request, a deliberate
    composition change beyond Relay's contract — a second spine (BRANCH): a
-   left arm that pours in from the top left and meets the main stream below
-   the banner logo. CONFIG, shaders, tiering and the entrance are Relay's own.
+   left arm that pours in from the top left and meets the main stream just
+   below the hill crest under the banner logo. Hero waypoints are anchored to
+   the banner image and the hero's gutter column (resolvePath's `xAt`) so the
+   stream never crosses a word in the hero. CONFIG, shaders, tiering and the entrance are Relay's own.
    Colours come from the --stream-* tokens in styles.css (gold + emerald). */
 /* ═══════════════════════════════════════════════════════════════════════
    THE PAGE-LONG PARTICLE STREAM — views/home/stream/stream-scene.ts,
@@ -284,74 +286,68 @@ const banner = (msg) => { if (window.console) console.warn("[stream]", msg) }
 const easeOut = (t) => 1 - Math.pow(1 - t, 3)
 
 /* ── the path (stream-path.ts): waypoints anchored to the page's blocks ── */
-/** Two Oaks path. Hero, per frame: the main stream is the RIGHT arm — in from
-    above the top right, down the outer third of the banner, curving in under
-    the logo to the meeting point above the hill crest (the hot pinch), then on
-    down the page. The LEFT arm (BRANCH below) mirrors it from the top left and
-    melts into the main stream at the same point. */
+/** Two Oaks path. Hero waypoints are anchored to the BANNER IMAGE itself
+    (at: "hero-media" — y is a share of the banner's height, which is never
+    cropped vertically), so "just below the crest" (≈ 0.675) and "below the
+    lettering" (≈ 0.60) land in the same place on every screen.
+    The main stream is the RIGHT arm: in from beyond the top-right corner, down
+    the outer third over the oak, across the grass to the meeting point just
+    below the crest (the hot pinch), then — on desktop — down the empty gutter
+    column between the headline and the side copy (xAt: "hero-gutter"), so it
+    never crosses a word. The LEFT arm (BRANCH) mirrors it and melts in. */
+const M = "hero-media"
+const DESKTOP_ARMS = [
+  { at: M, x: 1.3, y: -0.1, z: -2.6 },
+  { at: M, x: 1.0, y: 0.36, z: -1.8 },
+  { at: M, x: 0.84, y: 0.62, z: -0.9, pinch: 0.45 },
+  { at: M, x: 0.64, y: 0.74, z: -0.3, pinch: 0.8 },
+  { at: M, x: 0.5, y: 0.79, z: 0, pinch: 1 },
+]
+const PHONE_HERO = [
+  { at: M, x: 1.6, y: 0.55, z: -2.4 },
+  { at: M, x: 1.15, y: 0.78, z: -1.6, pinch: 0.6 },
+  { at: M, x: 0.8, y: 0.8, z: -0.8, pinch: 0.9 },
+  { at: M, x: 0.5, y: 0.81, z: 0, pinch: 1 },
+  { at: M, x: 1.25, y: 0.98, z: -0.4, pinch: 0.7 },
+  { at: "hero", x: 1.5, y: 0.9, z: -0.4 },
+]
 const HERO = {
   1440: [
-    { at: "hero", x: 1.16, y: -0.3, z: -2.6 },
-    { at: "hero", x: 0.93, y: 0.24, z: -1.8 },
-    { at: "hero", x: 0.84, y: 0.56, z: -0.9 },
-    { at: "hero", x: 0.5, y: 0.7, z: 0, pinch: 1 },
-    { at: "hero", x: 0.635, y: 0.92, z: -0.2, pinch: 1 },
+    ...DESKTOP_ARMS,
+    { at: "hero-copy", xAt: "hero-gutter", x: 0.5, y: -0.06, z: -0.1, pinch: 1 },
+    { at: "hero-copy", xAt: "hero-gutter", x: 0.5, y: 1.02, z: -0.2, pinch: 1 },
   ],
   1024: [
-    { at: "hero", x: 1.14, y: -0.14, z: -2.6 },
-    { at: "hero", x: 0.95, y: 0.14, z: -1.8 },
-    { at: "hero", x: 0.86, y: 0.34, z: -0.9 },
-    { at: "hero", x: 0.5, y: 0.425, z: 0, pinch: 1 },
-    { at: "hero", x: 1.15, y: 0.68, z: -0.4 },
+    { at: M, x: 1.3, y: -0.1, z: -2.6 },
+    { at: M, x: 1.0, y: 0.36, z: -1.8 },
+    { at: M, x: 0.86, y: 0.62, z: -0.9, pinch: 0.45 },
+    { at: M, x: 0.64, y: 0.74, z: -0.3, pinch: 0.8 },
+    { at: M, x: 0.5, y: 0.79, z: 0, pinch: 1 },
+    { at: M, x: 1.2, y: 1.15, z: -0.4 },
+    { at: "hero", x: 1.4, y: 0.95, z: -0.4 },
   ],
-  768: [
-    { at: "hero", x: 1.3, y: 0.08, z: -2.4 },
-    { at: "hero", x: 1.08, y: 0.26, z: -1.6 },
-    { at: "hero", x: 0.86, y: 0.325, z: -0.8 },
-    { at: "hero", x: 0.5, y: 0.345, z: 0, pinch: 1 },
-    { at: "hero", x: 1.2, y: 0.56, z: -0.4 },
-  ],
-  390: [
-    { at: "hero", x: 1.3, y: 0.08, z: -2.4 },
-    { at: "hero", x: 1.08, y: 0.26, z: -1.6 },
-    { at: "hero", x: 0.86, y: 0.325, z: -0.8 },
-    { at: "hero", x: 0.5, y: 0.345, z: 0, pinch: 1 },
-    { at: "hero", x: 1.2, y: 0.56, z: -0.4 },
-  ],
+  768: PHONE_HERO,
+  390: PHONE_HERO,
 }
 /** The left arm, per frame: a mirror of the right arm that ends at the
     meeting point plus one short step along the main stream's heading, so it
     dissolves into the main stream instead of stopping in mid-air. */
-const BRANCH = {
-  1440: [
-    { at: "hero", x: -0.22, y: -0.22, z: -2.6 },
-    { at: "hero", x: 0.06, y: 0.28, z: -1.8 },
-    { at: "hero", x: 0.16, y: 0.56, z: -0.9 },
-    { at: "hero", x: 0.5, y: 0.7, z: 0, pinch: 1 },
-    { at: "hero", x: 0.56, y: 0.8, z: -0.1 },
-  ],
-  1024: [
-    { at: "hero", x: -0.14, y: -0.14, z: -2.6 },
-    { at: "hero", x: 0.05, y: 0.14, z: -1.8 },
-    { at: "hero", x: 0.14, y: 0.34, z: -0.9 },
-    { at: "hero", x: 0.5, y: 0.425, z: 0, pinch: 1 },
-    { at: "hero", x: 0.7, y: 0.48, z: -0.1 },
-  ],
-  768: [
-    { at: "hero", x: -0.3, y: 0.08, z: -2.4 },
-    { at: "hero", x: -0.08, y: 0.26, z: -1.6 },
-    { at: "hero", x: 0.14, y: 0.325, z: -0.8 },
-    { at: "hero", x: 0.5, y: 0.345, z: 0, pinch: 1 },
-    { at: "hero", x: 0.7, y: 0.4, z: -0.1 },
-  ],
-  390: [
-    { at: "hero", x: -0.3, y: 0.08, z: -2.4 },
-    { at: "hero", x: -0.08, y: 0.26, z: -1.6 },
-    { at: "hero", x: 0.14, y: 0.325, z: -0.8 },
-    { at: "hero", x: 0.5, y: 0.345, z: 0, pinch: 1 },
-    { at: "hero", x: 0.7, y: 0.4, z: -0.1 },
-  ],
-}
+const DESKTOP_BRANCH = [
+  { at: M, x: -0.3, y: -0.1, z: -2.6 },
+  { at: M, x: 0.0, y: 0.36, z: -1.8 },
+  { at: M, x: 0.16, y: 0.62, z: -0.9, pinch: 0.45 },
+  { at: M, x: 0.36, y: 0.74, z: -0.3, pinch: 0.8 },
+  { at: M, x: 0.5, y: 0.79, z: 0, pinch: 1 },
+  { at: M, x: 0.58, y: 0.83, z: -0.1 },
+]
+const PHONE_BRANCH = [
+  { at: M, x: -0.6, y: 0.55, z: -2.4 },
+  { at: M, x: -0.15, y: 0.78, z: -1.6, pinch: 0.6 },
+  { at: M, x: 0.2, y: 0.8, z: -0.8, pinch: 0.9 },
+  { at: M, x: 0.5, y: 0.81, z: 0, pinch: 1 },
+  { at: M, x: 0.62, y: 0.85, z: -0.1 },
+]
+const BRANCH = { 1440: DESKTOP_BRANCH, 1024: DESKTOP_BRANCH, 768: PHONE_BRANCH, 390: PHONE_BRANCH }
 /** Below the hero, shared by every frame: wide bends down the page, through
     the cross between the two oaks, and out through the left edge above the
     contact section. Every waypoint sits lower than the one before. */
@@ -401,11 +397,20 @@ const docTop = (el) => {
 const resolvePath = (waypoints, main) => {
   const column = main.getBoundingClientRect()
   const points = []
-  for (const { at, x, y, z, pinch = 0 } of waypoints) {
+  for (const { at, x, y, z, pinch = 0, xAt } of waypoints) {
     const section = document.getElementById(at)
     if (!section) continue
     const block = blockOf(section)
-    points.push({ x: column.left + (x + SHIFT) * column.width, y: docTop(block) + y * block.offsetHeight, z, pinch })
+    /* Two Oaks: `xAt` measures x against another element's box (e.g. the empty
+       gutter column in the hero) instead of the page column */
+    let px = column.left + (x + SHIFT) * column.width
+    if (xAt) {
+      const el = document.getElementById(xAt)
+      if (!el || !el.offsetWidth) continue
+      const r = el.getBoundingClientRect()
+      px = r.left + x * r.width
+    }
+    points.push({ x: px, y: docTop(block) + y * block.offsetHeight, z, pinch })
   }
   return points
 }

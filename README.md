@@ -18,7 +18,7 @@ Then open http://localhost:8000. A local server is needed because the particle s
 | Section | What happens |
 | --- | --- |
 | **Loader** | The Two Oaks emblem rises out of the ground and a gold sheen passes over it. The curtain then splits, and the page animates in as it lifts. |
-| **Hero** | The banner (the emblem over the hill at sunrise) fills the screen with a slow settle-in zoom, a pulsing sunrise glow and scroll parallax. Two streams of gold and emerald particles pour in from the top-left and top-right corners and meet in one glowing knot on the hill, just below the logo. |
+| **Hero** | The banner (the emblem over the hill at sunrise) fills the screen with a slow settle-in zoom, a pulsing sunrise glow and scroll parallax. Two softly glowing streams of gold and emerald particles pour in from the top-left and top-right corners, past the oaks, and meet on the grass just below the crest of the hill, never touching a word. |
 | **Particle stream** | After the two arms meet, one stream runs the full length of the page as you scroll. It's made of glowing filaments, sparks and soft bokeh, and passes behind every section. It comes from the GetLayers *Relay* template. |
 | **Foundation** | Proverbs 3:5–6, set large. The words light up as you scroll. |
 | **Getting found** | Four cards: your site, Google listing, social and local SEO. Each tilts toward the cursor, and its line art draws itself. |
@@ -38,7 +38,7 @@ Other details: smooth scrolling, a custom gold cursor, buttons that pull toward 
 - **Copy, phone and email:** these are in `index.html`. The contact links use `mike@two-oaks-technologies.com` and `256-529-0546`.
 - **Colours and fonts:** every design token is in `:root` at the top of `assets/css/styles.css`. The particle stream's colours are the `--stream-*` tokens there.
 - **Images:** `assets/img/`. `hero-banner.webp` is the banner, and `emblem.png`, `logo.png`, `mike-family.jpg` and `og-image.jpg` come from the current site.
-- **The stream's path:** `HERO` (the right arm), `BRANCH` (the left arm) and `TAIL` near the top of `assets/js/stream.js` list waypoints tied to section ids, one set per screen size. The two arms share a meeting point with `pinch: 1`. If you rename or remove a section, update its waypoints. Every waypoint has to sit lower on the page than the one before it.
+- **The stream's path:** `HERO` (the right arm), `BRANCH` (the left arm) and `TAIL` near the top of `assets/js/stream.js` list waypoints tied to section ids, one set per screen size. The two arms share a meeting point with `pinch: 1`. Hero waypoints use `at: "hero-media"` (a share of the banner image's height), and the desktop stream runs down the empty `hero-gutter` column between the headline and the side copy (`xAt`), so it never crosses a word in the hero. If you rename or remove a section, update its waypoints. Every waypoint has to sit lower on the page than the one before it.
 
 ## Project structure
 

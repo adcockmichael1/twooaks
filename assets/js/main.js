@@ -299,6 +299,7 @@
 
   const nav = $('#nav')
   const hero = $('.hero')
+  const stream = $('#stream')
   const name = $('.name')
   const verseWords = verse ? $$('.w', verse) : []
   let lastLit = -1
@@ -311,6 +312,9 @@
     nav.classList.toggle('is-hidden', y > vh * 0.9 && y > lastY + 2)
     if (y < lastY - 2) nav.classList.remove('is-hidden')
     lastY = y
+
+    // the stream glows softer over the hero and comes up to full as the hero leaves
+    if (stream) stream.style.opacity = (0.6 + 0.4 * clamp(y / (vh * 0.9))).toFixed(3)
 
     // the banner sinks a little slower than the page
     if (hero && !REDUCED && y < hero.offsetHeight * 1.2) setVar(heroImg, '--py', (y * 0.28).toFixed(1) + 'px')
