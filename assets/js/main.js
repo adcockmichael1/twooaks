@@ -245,6 +245,7 @@
   const t0 = performance.now()
   let opened = false
   const heroImg = $('.hero__img')
+  const heroArt = $('.hero__art')
   const imgReady = heroImg ? (heroImg.decode ? heroImg.decode().catch(() => {}) : new Promise(res => { heroImg.complete ? res() : heroImg.addEventListener('load', res, { once: true }) })) : Promise.resolve()
   const fontsReady = document.fonts ? document.fonts.ready : Promise.resolve()
   Promise.all([imgReady, fontsReady]).then(() => {
@@ -317,7 +318,7 @@
     if (stream) stream.style.opacity = (0.6 + 0.4 * clamp(y / (vh * 0.9))).toFixed(3)
 
     // the banner sinks a little slower than the page
-    if (hero && !REDUCED && y < hero.offsetHeight * 1.2) setVar(heroImg, '--py', (y * 0.28).toFixed(1) + 'px')
+    if (hero && !REDUCED && y < hero.offsetHeight * 1.2) setVar(heroArt, '--py', (y * 0.28).toFixed(1) + 'px')
 
     if (verse) {
       const r = verse.getBoundingClientRect()

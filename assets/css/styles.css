@@ -248,14 +248,26 @@ main > .hero { z-index: auto; }  /* no stacking context: the banner goes under t
 /* zoomed out: tall enough to read the logo, wide enough to show most of both oaks,
    short enough to leave room for the copy below the meeting point; never cropped vertically */
 .hero__media { position: absolute; top: 0; left: 0; right: 0; height: max(calc(100vw / 2.5), min(calc(100vw / 1.9), calc(100svh - 240px))); z-index: 0; overflow: hidden; }
-.hero__img {
-  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%;
+/* the painting at its own proportions, centred and side-cropped exactly as cover would —
+   so % inside it are painting coordinates (the canopy glows, the stream's start points) */
+.hero__media { display: flex; justify-content: center; }  /* centres the painting, overflowing both sides equally */
+.hero__art {
+  position: relative; flex: none; height: 100%; aspect-ratio: 1983 / 793; min-width: 100%;
   transform: translate3d(0, var(--py, 0px), 0) scale(var(--hs, 1.08)); transform-origin: 50% 62%;
   transition: transform 3200ms cubic-bezier(.2, .7, .1, 1);
-  filter: saturate(1.05) contrast(1.04);
 }
-.is-open .hero__img { --hs: 1; }
-.hero.is-settled .hero__img { transition: none; }
+.is-open .hero__art { --hs: 1; }
+.hero.is-settled .hero__art { transition: none; }
+.hero__img { display: block; width: 100%; height: 100%; object-fit: cover; filter: saturate(1.05) contrast(1.04); }
+/* the oaks breathe a soft gold light — the stream's source */
+.hero__glow {
+  position: absolute; width: 30%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; pointer-events: none;
+  background: radial-gradient(closest-side, rgba(255, 214, 130, .55), rgba(230, 180, 90, .18) 45%, transparent 72%);
+  mix-blend-mode: screen; opacity: 0; animation: canopy 4.5s ease-in-out 1.2s infinite alternate;
+}
+.hero__glow--l { left: 13%; top: 36%; }
+.hero__glow--r { left: 87%; top: 36%; animation-delay: 3.45s; }
+@keyframes canopy { from { opacity: .18; } to { opacity: .42; } }
 .hero__sun {
   position: absolute; left: 50%; top: 66%; width: 70vmax; height: 46vmax; transform: translate(-50%, -50%);
   background: radial-gradient(closest-side, rgba(255, 210, 120, .5), rgba(255, 190, 90, .16) 45%, transparent 75%);
@@ -547,7 +559,6 @@ main > .hero { z-index: auto; }  /* no stacking context: the banner goes under t
   .nav__word { font-size: 15px; }
   .nav__phone { display: none; }
   .hero__media { height: 64svh; min-height: 400px; }
-  .hero__img { object-position: 50% 32%; }
   .hero__content { padding: 4px var(--pad) 40px; }
   .hero__title { font-size: clamp(40px, 11.5vw, 64px); }
   .hero__actions .btn { flex: 1 1 100%; }
@@ -575,7 +586,8 @@ main > .hero { z-index: auto; }  /* no stacking context: the banner goes under t
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
   [data-reveal], [data-hero], [data-split] .ch, [data-split] .w, .card[data-reveal] { transform: none !important; filter: none !important; transition-property: opacity, color !important; transition-duration: 400ms !important; transition-delay: 0ms !important; }
-  .hero__img { transform: none !important; transition: none !important; }
+  .hero__art { transform: none !important; transition: none !important; }
+  .hero__glow { animation: none !important; opacity: .25; }
   .marquee__row { animation: none !important; flex-wrap: wrap; width: auto; }
   .grain { display: none; }
   .loader__emblem img { clip-path: none; }

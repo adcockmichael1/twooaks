@@ -4,8 +4,8 @@
    the waypoints (anchored to this page's sections), a small shim for the
    template's page runtime, and — at the client's request, a deliberate
    composition change beyond Relay's contract — a second spine (BRANCH): a
-   left arm that pours in from the top left and meets the main stream just
-   below the hill crest under the banner logo. Hero waypoints are anchored to
+   left arm: both arms rise out of the two oaks in the banner painting and
+   meet just below the hill crest under the banner logo. Hero waypoints are anchored to
    the banner image and the hero's gutter column (resolvePath's `xAt`) so the
    stream never crosses a word in the hero. CONFIG, shaders, tiering and the entrance are Relay's own.
    Colours come from the --stream-* tokens in styles.css (gold + emerald). */
@@ -286,29 +286,30 @@ const banner = (msg) => { if (window.console) console.warn("[stream]", msg) }
 const easeOut = (t) => 1 - Math.pow(1 - t, 3)
 
 /* ── the path (stream-path.ts): waypoints anchored to the page's blocks ── */
-/** Two Oaks path. Hero waypoints are anchored to the BANNER IMAGE itself
-    (at: "hero-media" — y is a share of the banner's height, which is never
-    cropped vertically), so "just below the crest" (≈ 0.675) and "below the
-    lettering" (≈ 0.60) land in the same place on every screen.
-    The main stream is the RIGHT arm: in from beyond the top-right corner, down
-    the outer third over the oak, across the grass to the meeting point just
-    below the crest (the hot pinch), then — on desktop — down the empty gutter
-    column between the headline and the side copy (xAt: "hero-gutter"), so it
-    never crosses a word. The LEFT arm (BRANCH) mirrors it and melts in. */
-const M = "hero-media"
+/** Two Oaks path. The two arms are born inside the oak canopies of the banner
+    painting and draw their light out of the leaves: hero waypoints use
+    at/xAt "hero-art" — painting coordinates (the canopies sit near x 0.13 /
+    0.87, y 0.36; the lettering spans x 0.39–0.61 down to y 0.60; the crest is
+    at y ≈ 0.675). The main stream is the RIGHT arm: out of the right-hand oak,
+    along its lower branches, across the grass to the meeting point just below
+    the crest (the hot pinch), then — on desktop — down the empty gutter column
+    between the headline and the side copy, so it never crosses a word. The
+    LEFT arm (BRANCH) mirrors it out of the left-hand oak and melts in. */
+const A = { at: "hero-art", xAt: "hero-art" }
 const DESKTOP_ARMS = [
-  { at: M, x: 1.3, y: -0.1, z: -2.6 },
-  { at: M, x: 1.0, y: 0.36, z: -1.8 },
-  { at: M, x: 0.84, y: 0.62, z: -0.9, pinch: 0.45 },
-  { at: M, x: 0.64, y: 0.74, z: -0.3, pinch: 0.8 },
-  { at: M, x: 0.5, y: 0.79, z: 0, pinch: 1 },
+  { ...A, x: 0.88, y: 0.24, z: -1.6 },
+  { ...A, x: 0.84, y: 0.44, z: -1.1 },
+  { ...A, x: 0.76, y: 0.6, z: -0.7, pinch: 0.45 },
+  { ...A, x: 0.62, y: 0.74, z: -0.3, pinch: 0.8 },
+  { ...A, x: 0.5, y: 0.79, z: 0, pinch: 1 },
 ]
 const PHONE_HERO = [
-  { at: M, x: 1.6, y: 0.55, z: -2.4 },
-  { at: M, x: 1.15, y: 0.78, z: -1.6, pinch: 0.6 },
-  { at: M, x: 0.8, y: 0.8, z: -0.8, pinch: 0.9 },
-  { at: M, x: 0.5, y: 0.81, z: 0, pinch: 1 },
-  { at: M, x: 1.25, y: 0.98, z: -0.4, pinch: 0.7 },
+  { ...A, x: 0.86, y: 0.3, z: -2.0 },
+  { ...A, x: 0.74, y: 0.7, z: -1.4, pinch: 0.5 },
+  { ...A, x: 0.69, y: 0.78, z: -1.0, pinch: 0.6 },
+  { ...A, x: 0.587, y: 0.8, z: -0.6, pinch: 0.9 },
+  { ...A, x: 0.5, y: 0.81, z: 0, pinch: 1 },
+  { ...A, x: 0.717, y: 0.98, z: -0.4, pinch: 0.7 },
   { at: "hero", x: 1.5, y: 0.9, z: -0.4 },
 ]
 const HERO = {
@@ -318,34 +319,31 @@ const HERO = {
     { at: "hero-copy", xAt: "hero-gutter", x: 0.5, y: 1.02, z: -0.2, pinch: 1 },
   ],
   1024: [
-    { at: M, x: 1.3, y: -0.1, z: -2.6 },
-    { at: M, x: 1.0, y: 0.36, z: -1.8 },
-    { at: M, x: 0.86, y: 0.62, z: -0.9, pinch: 0.45 },
-    { at: M, x: 0.64, y: 0.74, z: -0.3, pinch: 0.8 },
-    { at: M, x: 0.5, y: 0.79, z: 0, pinch: 1 },
-    { at: M, x: 1.2, y: 1.15, z: -0.4 },
+    ...DESKTOP_ARMS,
+    { at: "hero-media", x: 1.2, y: 1.15, z: -0.4 },
     { at: "hero", x: 1.4, y: 0.95, z: -0.4 },
   ],
   768: PHONE_HERO,
   390: PHONE_HERO,
 }
-/** The left arm, per frame: a mirror of the right arm that ends at the
-    meeting point plus one short step along the main stream's heading, so it
-    dissolves into the main stream instead of stopping in mid-air. */
+/** The left arm, per frame: a mirror of the right arm out of the left-hand oak,
+    ending at the meeting point plus one short step along the main stream's
+    heading, so it dissolves into the main stream instead of stopping. */
 const DESKTOP_BRANCH = [
-  { at: M, x: -0.3, y: -0.1, z: -2.6 },
-  { at: M, x: 0.0, y: 0.36, z: -1.8 },
-  { at: M, x: 0.16, y: 0.62, z: -0.9, pinch: 0.45 },
-  { at: M, x: 0.36, y: 0.74, z: -0.3, pinch: 0.8 },
-  { at: M, x: 0.5, y: 0.79, z: 0, pinch: 1 },
-  { at: M, x: 0.58, y: 0.83, z: -0.1 },
+  { ...A, x: 0.12, y: 0.24, z: -1.6 },
+  { ...A, x: 0.16, y: 0.44, z: -1.1 },
+  { ...A, x: 0.24, y: 0.6, z: -0.7, pinch: 0.45 },
+  { ...A, x: 0.38, y: 0.74, z: -0.3, pinch: 0.8 },
+  { ...A, x: 0.5, y: 0.79, z: 0, pinch: 1 },
+  { ...A, x: 0.56, y: 0.83, z: -0.1 },
 ]
 const PHONE_BRANCH = [
-  { at: M, x: -0.6, y: 0.55, z: -2.4 },
-  { at: M, x: -0.15, y: 0.78, z: -1.6, pinch: 0.6 },
-  { at: M, x: 0.2, y: 0.8, z: -0.8, pinch: 0.9 },
-  { at: M, x: 0.5, y: 0.81, z: 0, pinch: 1 },
-  { at: M, x: 0.62, y: 0.85, z: -0.1 },
+  { ...A, x: 0.14, y: 0.3, z: -2.0 },
+  { ...A, x: 0.26, y: 0.7, z: -1.4, pinch: 0.5 },
+  { ...A, x: 0.31, y: 0.78, z: -1.0, pinch: 0.6 },
+  { ...A, x: 0.413, y: 0.8, z: -0.6, pinch: 0.9 },
+  { ...A, x: 0.5, y: 0.81, z: 0, pinch: 1 },
+  { ...A, x: 0.535, y: 0.85, z: -0.1 },
 ]
 const BRANCH = { 1440: DESKTOP_BRANCH, 1024: DESKTOP_BRANCH, 768: PHONE_BRANCH, 390: PHONE_BRANCH }
 /** Below the hero, shared by every frame: wide bends down the page, through
@@ -394,6 +392,12 @@ const docTop = (el) => {
 }
 /** Waypoints → document px against the live layout. Points whose section is
     missing are skipped, so the stream survives a section being removed. */
+/** Document left, from layout offsets — immune to transforms (Two Oaks). */
+const docLeft = (el) => {
+  let x = 0
+  for (let node = el; node; node = node.offsetParent instanceof HTMLElement ? node.offsetParent : null) x += node.offsetLeft
+  return x
+}
 const resolvePath = (waypoints, main) => {
   const column = main.getBoundingClientRect()
   const points = []
@@ -407,8 +411,7 @@ const resolvePath = (waypoints, main) => {
     if (xAt) {
       const el = document.getElementById(xAt)
       if (!el || !el.offsetWidth) continue
-      const r = el.getBoundingClientRect()
-      px = r.left + x * r.width
+      px = docLeft(el) + x * el.offsetWidth   // layout box: immune to the banner's zoom + parallax
     }
     points.push({ x: px, y: docTop(block) + y * block.offsetHeight, z, pinch })
   }
@@ -831,7 +834,8 @@ if (canvas && !R.isBot()) whenBuildable(() => {
         this.unit = parseFloat(getComputedStyle(document.documentElement).fontSize) / 16
         this.pointsMat.uniforms.uScale.value = this.unit * dpr
         this.shared.uPx.value = this.unit / (this.height / 2)
-        this.shared.uFadeIn.value = 120 * this.unit
+        /* Two Oaks: a long fade-in (Relay: 120) so each arm materialises out of an oak canopy */
+        this.shared.uFadeIn.value = 380 * this.unit
         const lines = this.linesMat.uniforms
         lines.uLineWavelength.value = CONFIG.lineWavelength * this.unit
         lines.uPulseSpacing.value = CONFIG.pulseSpacing * this.unit
