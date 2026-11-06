@@ -109,6 +109,6 @@
   "scene": {
     "id": "relay (template) — page-long particle stream",
     "file": "assets/js/stream.js",
-    "note": "Relay's stream-scene/stream-path/particle-stream lifted verbatim; only the waypoints (anchored to this page's section ids) and a small runtime shim are new. Keep waypoints in document order; renaming a section id straightens the stream."
+    "note": "Relay's stream-scene/stream-path/particle-stream lifted verbatim, plus — at the client's request, a composition change beyond Relay's contract — a second spine (BRANCH) sharing the renderer, bloom and every look uniform: two arms pour in from the top-left and top-right, meet in one pinched knot on the hill crest just below the banner logo, and continue down the page as one stream. Waypoints are anchored to section ids and must stay in document order."
   }
 }

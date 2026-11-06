@@ -2,8 +2,10 @@
    stream-path.ts, particle-stream.tsx), adapted for Two Oaks Technologies.
    Source of truth: getlayers_materialize('relay') portable master. Changed:
    the waypoints (anchored to this page's sections), a small shim for the
-   template's page runtime, and nothing else. CONFIG, shaders, tiering and
-   the entrance are Relay's own (contract: preserve motion, composition).
+   template's page runtime, and — at the client's request, a deliberate
+   composition change beyond Relay's contract — a second spine (BRANCH): a
+   left arm that pours in from the top left and meets the main stream below
+   the banner logo. CONFIG, shaders, tiering and the entrance are Relay's own.
    Colours come from the --stream-* tokens in styles.css (gold + emerald). */
 /* ═══════════════════════════════════════════════════════════════════════
    THE PAGE-LONG PARTICLE STREAM — views/home/stream/stream-scene.ts,
@@ -271,7 +273,7 @@ const R = {
     if (document.documentElement.classList.contains("is-done")) fn()
     else window.addEventListener("gate:done", () => fn(), { once: true })
   },
-  frame: () => { const w = window.innerWidth; return w > 1024 ? 1440 : w > 768 ? 1024 : w > 480 ? 768 : 390 },
+  frame: () => { const w = window.innerWidth; return w > 1080 ? 1440 : w > 720 ? 1024 : w > 480 ? 768 : 390 },  /* matches the CSS layout breakpoints */
   onFrame: (fn) => { let f = R.frame(); window.addEventListener("resize", () => { const n = R.frame(); if (n !== f) { f = n; fn() } }, { passive: true }) },
   ticker: { subscribe: (fn) => { let id = 0, on = true; const loop = (t) => { if (!on) return; fn(t); id = requestAnimationFrame(loop) }; id = requestAnimationFrame(loop); return () => { on = false; cancelAnimationFrame(id) } } },
   scrollY: () => window.scrollY,
@@ -282,34 +284,72 @@ const banner = (msg) => { if (window.console) console.warn("[stream]", msg) }
 const easeOut = (t) => 1 - Math.pow(1 - t, 3)
 
 /* ── the path (stream-path.ts): waypoints anchored to the page's blocks ── */
-/** Two Oaks path. Hero, per frame: in from above the top right, across the
-    banner sky and down into the sunrise on the hill (the hot pinch). */
+/** Two Oaks path. Hero, per frame: the main stream is the RIGHT arm — in from
+    above the top right, down the outer third of the banner, curving in under
+    the logo to the meeting point above the hill crest (the hot pinch), then on
+    down the page. The LEFT arm (BRANCH below) mirrors it from the top left and
+    melts into the main stream at the same point. */
 const HERO = {
   1440: [
-    { at: "hero", x: 1.12, y: -0.35, z: -2.6 },
-    { at: "hero", x: 0.93, y: 0.14, z: -1.8 },
-    { at: "hero", x: 0.84, y: 0.5, z: -0.9 },
-    { at: "hero", x: 0.6, y: 0.78, z: 0, pinch: 1 },
+    { at: "hero", x: 1.16, y: -0.3, z: -2.6 },
+    { at: "hero", x: 0.93, y: 0.24, z: -1.8 },
+    { at: "hero", x: 0.84, y: 0.56, z: -0.9 },
+    { at: "hero", x: 0.5, y: 0.7, z: 0, pinch: 1 },
+    { at: "hero", x: 0.635, y: 0.92, z: -0.2, pinch: 1 },
   ],
   1024: [
-    { at: "hero", x: 1.1, y: -0.3, z: -2.6 },
-    { at: "hero", x: 0.94, y: 0.16, z: -1.8 },
-    { at: "hero", x: 0.86, y: 0.48, z: -0.9 },
-    { at: "hero", x: 0.62, y: 0.76, z: 0, pinch: 1 },
+    { at: "hero", x: 1.14, y: -0.14, z: -2.6 },
+    { at: "hero", x: 0.95, y: 0.14, z: -1.8 },
+    { at: "hero", x: 0.86, y: 0.34, z: -0.9 },
+    { at: "hero", x: 0.5, y: 0.425, z: 0, pinch: 1 },
+    { at: "hero", x: 1.15, y: 0.68, z: -0.4 },
   ],
   768: [
-    { at: "hero", x: 1.1, y: -0.15, z: -2.4 },
-    { at: "hero", x: 0.86, y: 0.18, z: -1.6 },
-    { at: "hero", x: 0.72, y: 0.38, z: -0.8 },
-    { at: "hero", x: 0.6, y: 0.54, z: 0, pinch: 1 },
-    { at: "hero", x: 1.08, y: 0.84, z: -0.4 },
+    { at: "hero", x: 1.3, y: 0.08, z: -2.4 },
+    { at: "hero", x: 1.08, y: 0.26, z: -1.6 },
+    { at: "hero", x: 0.86, y: 0.325, z: -0.8 },
+    { at: "hero", x: 0.5, y: 0.345, z: 0, pinch: 1 },
+    { at: "hero", x: 1.2, y: 0.56, z: -0.4 },
   ],
   390: [
-    { at: "hero", x: 1.1, y: -0.12, z: -2.4 },
-    { at: "hero", x: 0.86, y: 0.1, z: -1.6 },
-    { at: "hero", x: 0.68, y: 0.26, z: -0.8 },
-    { at: "hero", x: 0.6, y: 0.37, z: 0, pinch: 1 },
+    { at: "hero", x: 1.3, y: 0.08, z: -2.4 },
+    { at: "hero", x: 1.08, y: 0.26, z: -1.6 },
+    { at: "hero", x: 0.86, y: 0.325, z: -0.8 },
+    { at: "hero", x: 0.5, y: 0.345, z: 0, pinch: 1 },
     { at: "hero", x: 1.2, y: 0.56, z: -0.4 },
+  ],
+}
+/** The left arm, per frame: a mirror of the right arm that ends at the
+    meeting point plus one short step along the main stream's heading, so it
+    dissolves into the main stream instead of stopping in mid-air. */
+const BRANCH = {
+  1440: [
+    { at: "hero", x: -0.22, y: -0.22, z: -2.6 },
+    { at: "hero", x: 0.06, y: 0.28, z: -1.8 },
+    { at: "hero", x: 0.16, y: 0.56, z: -0.9 },
+    { at: "hero", x: 0.5, y: 0.7, z: 0, pinch: 1 },
+    { at: "hero", x: 0.56, y: 0.8, z: -0.1 },
+  ],
+  1024: [
+    { at: "hero", x: -0.14, y: -0.14, z: -2.6 },
+    { at: "hero", x: 0.05, y: 0.14, z: -1.8 },
+    { at: "hero", x: 0.14, y: 0.34, z: -0.9 },
+    { at: "hero", x: 0.5, y: 0.425, z: 0, pinch: 1 },
+    { at: "hero", x: 0.7, y: 0.48, z: -0.1 },
+  ],
+  768: [
+    { at: "hero", x: -0.3, y: 0.08, z: -2.4 },
+    { at: "hero", x: -0.08, y: 0.26, z: -1.6 },
+    { at: "hero", x: 0.14, y: 0.325, z: -0.8 },
+    { at: "hero", x: 0.5, y: 0.345, z: 0, pinch: 1 },
+    { at: "hero", x: 0.7, y: 0.4, z: -0.1 },
+  ],
+  390: [
+    { at: "hero", x: -0.3, y: 0.08, z: -2.4 },
+    { at: "hero", x: -0.08, y: 0.26, z: -1.6 },
+    { at: "hero", x: 0.14, y: 0.325, z: -0.8 },
+    { at: "hero", x: 0.5, y: 0.345, z: 0, pinch: 1 },
+    { at: "hero", x: 0.7, y: 0.4, z: -0.1 },
   ],
 }
 /** Below the hero, shared by every frame: wide bends down the page, through
@@ -563,6 +603,12 @@ if (canvas && !R.isBot()) whenBuildable(() => {
         this.lines.frustumCulled = false
         this.scene.add(this.lines, this.points)
 
+        /* Two Oaks: the left arm. Its own spine texture and draws; every look
+           uniform is the main stream's object by reference, so time, colour,
+           size and parallax stay in step. Only the curve-bound values are its own. */
+        this.branch = this.makeBranch()
+        this.scene.add(this.branch.lines, this.branch.points)
+
         this.composer = new EffectComposer(this.renderer)
         this.composer.addPass(new RenderPass(this.scene, this.camera))
         this.bloom = new UnrealBloomPass(new Vector2(1, 1), CONFIG.bloomStr, CONFIG.bloomRadius, CONFIG.bloomThresh)
@@ -571,10 +617,37 @@ if (canvas && !R.isBot()) whenBuildable(() => {
         this.composer.addPass(this.output)
       }
 
+      /** The second spine (Two Oaks): same shaders, own curve, own draws. */
+      makeBranch() {
+        const data = new Float32Array(SAMPLES * 2 * 4)
+        const tex = new DataTexture(data, SAMPLES, 2, RGBAFormat, FloatType)
+        tex.magFilter = NearestFilter
+        tex.minFilter = NearestFilter
+        const own = { uCurve: { value: tex }, uLen: { value: 1 }, uFadeOut: { value: 260 }, uRevealPx: { value: 0 } }
+        const opts = { blending: AdditiveBlending, transparent: true, depthTest: false, depthWrite: false }
+        const pointsMat = new ShaderMaterial({
+          ...opts,
+          uniforms: { ...this.pointsMat.uniforms, ...own, uFlow: { value: 0 }, uScrollU: { value: 0 } },
+          vertexShader: POINTS_VERT,
+          fragmentShader: POINTS_FRAG,
+        })
+        const linesMat = new ShaderMaterial({
+          ...opts,
+          uniforms: { ...this.linesMat.uniforms, ...own },
+          vertexShader: LINES_VERT,
+          fragmentShader: LINES_FRAG,
+        })
+        const points = new Points(this.buildPoints(0x0a4c5e), pointsMat)
+        const lines = new LineSegments(this.buildLines(0x7e0a), linesMat)
+        points.frustumCulled = false
+        lines.frustumCulled = false
+        return { data, tex, own, pointsMat, linesMat, points, lines, path: [], length: 0 }
+      }
+
       /** Particles: stream 79%, spray 14%, bokeh 3%, dust 4% — all ride the spine. */
-      buildPoints() {
+      buildPoints(seedValue = 0x5eed1e) {
         const total = CONFIG.particles
-        const rand = rng(0x5eed1e)
+        const rand = rng(seedValue)
         const gauss = () => rand() + rand() + rand() + rand() - 2
         const pos = new Float32Array(total * 3)
         const u = new Float32Array(total)
@@ -611,10 +684,10 @@ if (canvas && !R.isBot()) whenBuildable(() => {
       }
 
       /** Filaments: `strands` polylines along the spine, one draw as segments. */
-      buildLines() {
+      buildLines(seedValue = 0xf11a) {
         const n = CONFIG.strands
         const verts = n * (SEGMENTS + 1)
-        const rand = rng(0xf11a)
+        const rand = rng(seedValue)
         const u = new Float32Array(verts)
         const strand = new Float32Array(verts * 4)
         const index = new Uint32Array(n * SEGMENTS * 2)
@@ -642,8 +715,36 @@ if (canvas && !R.isBot()) whenBuildable(() => {
       /** Bake the spine through the resolved waypoints: document px position,
           depth, the pinch profile and the in-page normal. */
       bakeCurve() {
-        if (this.path.length < 2) return
-        const curve = new CatmullRomCurve3(this.path.map(({ x, y, z }) => new Vector3(x, y, z)), false, "centripetal")
+        const length = this.bakeInto(this.path, this.curveData, this.curve)
+        if (length) {
+          this.shared.uLen.value = length
+          this.shared.uFadeOut.value = Math.min(length / 4, 400 * this.unit)
+          this.pointsMat.uniforms.uFlow.value = (CONFIG.flowPx * this.unit) / length
+        }
+        /* the left arm: a short fade at its end, so it melts into the knot */
+        const b = this.branch
+        b.length = this.bakeInto(b.path, b.data, b.tex)
+        b.points.visible = b.lines.visible = b.length > 0
+        if (b.length) {
+          b.own.uLen.value = b.length
+          b.own.uFadeOut.value = Math.min(b.length / 4, 260 * this.unit)
+          b.pointsMat.uniforms.uFlow.value = (CONFIG.flowPx * this.unit) / b.length
+        }
+        this.rangeBranch()
+      }
+      /** The arm carries the same particle density per px as the main stream. */
+      rangeBranch() {
+        const b = this.branch
+        const share = this.tier === "low" ? CONFIG.lowShare : 1
+        const ratio = b.length && this.shared.uLen.value > 1 ? b.length / this.shared.uLen.value : 0.15
+        b.points.geometry.setDrawRange(0, Math.floor(CONFIG.particles * share * Math.min(1, Math.max(0.08, ratio))))
+        const strands = Math.ceil(CONFIG.strands * (this.tier === "low" ? 0.6 : 1))
+        b.lines.geometry.setDrawRange(0, strands * SEGMENTS * 2)
+      }
+      /** One spine through its waypoints → its float texture; returns its length (0 if none). */
+      bakeInto(path, data, tex) {
+        if (path.length < 2) return 0
+        const curve = new CatmullRomCurve3(path.map(({ x, y, z }) => new Vector3(x, y, z)), false, "centripetal")
         const length = Math.max(1, curve.getLength())
         const tangent = new Vector3()
         const samples = []
@@ -673,8 +774,8 @@ if (canvas && !R.isBot()) whenBuildable(() => {
           return sum / (2 * reach + 1)
         })
         const held = slideMean(slideMean(slideMin(radius, TURN_HOLD), TURN_SMOOTH), TURN_SMOOTH)
-        angles.forEach((angle, i) => { this.curveData.set([-Math.sin(angle), Math.cos(angle), held[i], 0], (SAMPLES + i) * 4) })
-        const peaks = this.path.filter(({ pinch }) => pinch > 0).map(({ x, y, pinch }) => {
+        angles.forEach((angle, i) => { data.set([-Math.sin(angle), Math.cos(angle), held[i], 0], (SAMPLES + i) * 4) })
+        const peaks = path.filter(({ pinch }) => pinch > 0).map(({ x, y, pinch }) => {
           let best = 0, bestD = Infinity
           samples.forEach((p, i) => { const d = (p.x - x) ** 2 + (p.y - y) ** 2; if (d < bestD) { bestD = d; best = i } })
           return { at: best / (SAMPLES - 1), pinch }
@@ -684,12 +785,10 @@ if (canvas && !R.isBot()) whenBuildable(() => {
           const at = i / (SAMPLES - 1)
           let pinch = 0
           for (const peak of peaks) { const d = ((at - peak.at) * length) / reach; pinch = Math.max(pinch, peak.pinch * Math.exp(-d * d)) }
-          this.curveData.set([p.x, p.y, p.z, pinch], i * 4)
+          data.set([p.x, p.y, p.z, pinch], i * 4)
         })
-        this.curve.needsUpdate = true
-        this.shared.uLen.value = length
-        this.shared.uFadeOut.value = Math.min(length / 4, 400 * this.unit)
-        this.pointsMat.uniforms.uFlow.value = (CONFIG.flowPx * this.unit) / length
+        tex.needsUpdate = true
+        return length
       }
 
       /** Tint through the colour roles — never the shader. */
@@ -700,7 +799,7 @@ if (canvas && !R.isBot()) whenBuildable(() => {
         this.shared.uColDeep.value.set(colors.colDeep)
         this.shared.uColSpark.value.set(colors.colSpark)
       }
-      setPath(path) { this.path = path; this.bakeCurve() }
+      setPath(path, branchPath = []) { this.path = path; this.branch.path = branchPath; this.bakeCurve() }
       /** Device tier: DPR and draw ranges only — never a define or a rebuild. */
       retune(tier) {
         this.tier = tier
@@ -708,6 +807,7 @@ if (canvas && !R.isBot()) whenBuildable(() => {
         this.points.geometry.setDrawRange(0, Math.floor(CONFIG.particles * share))
         const strands = Math.ceil(CONFIG.strands * (tier === "low" ? 0.6 : 1))
         this.lines.geometry.setDrawRange(0, strands * SEGMENTS * 2)
+        this.rangeBranch()
         this.resize(this.width, this.height)
       }
       /** Viewport size, CSS px. */
@@ -768,6 +868,9 @@ if (canvas && !R.isBot()) whenBuildable(() => {
         this.camera.lookAt(0, 0, 0)
         const t = this.revealStart < 0 ? 0 : Math.min(1, (now - this.revealStart) / CONFIG.revealMs)
         this.shared.uRevealPx.value = t >= 1 ? REVEALED : easeOut(t) * CONFIG.revealPx * this.unit
+        /* both arms draw in from their tops at once, so they meet on screen */
+        this.branch.own.uRevealPx.value = this.shared.uRevealPx.value
+        if (this.branch.length) this.branch.pointsMat.uniforms.uScrollU.value = (this.scrollPx / this.branch.length) % 1
         this.shared.uTime.value = now / 1000
         this.shared.uTimeS.value = (now / 1000) % 1000
         this.shared.uView.value.set(this.width / 2, this.height / 2, this.scrollY)
@@ -780,6 +883,9 @@ if (canvas && !R.isBot()) whenBuildable(() => {
       dispose() {
         this.points.geometry.dispose(); this.lines.geometry.dispose()
         this.pointsMat.dispose(); this.linesMat.dispose(); this.curve.dispose()
+        const b = this.branch
+        b.points.geometry.dispose(); b.lines.geometry.dispose()
+        b.pointsMat.dispose(); b.linesMat.dispose(); b.tex.dispose()
         this.bloom.dispose(); this.composer.dispose(); this.renderer.dispose()
       }
     }
@@ -804,7 +910,8 @@ if (canvas && !R.isBot()) whenBuildable(() => {
     const place = () => {
       cancelAnimationFrame(placeRaf)
       placeRaf = requestAnimationFrame(() => {
-        scene.setPath(resolvePath(PATH[R.frame()], main))
+        const frame = R.frame()
+        scene.setPath(resolvePath(PATH[frame], main), resolvePath(BRANCH[frame] || [], main))
         if (reduce.matches) scene.render(STILL_MS)
       })
     }

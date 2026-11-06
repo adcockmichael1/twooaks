@@ -526,7 +526,11 @@ main > .hero { z-index: auto; }  /* no stacking context: the banner goes under t
 @media (max-width: 1080px) {
   .nav { grid-template-columns: 1fr auto; }
   .nav__links { display: none; }
-  .hero__content { grid-template-columns: 1fr; align-items: start; }
+  /* tablets and phones: the banner as its own block, the promise beneath it */
+  .hero { min-height: 0; display: block; padding: 0; }
+  .hero__media { position: relative; height: clamp(400px, 72svh, 640px); }
+  .hero__shade { background: linear-gradient(180deg, rgba(8, 17, 13, .55) 0%, transparent 18%), linear-gradient(0deg, var(--gl-bg) 0%, rgba(8, 17, 13, .5) 16%, transparent 38%); }
+  .hero__content { grid-template-columns: 1fr; align-items: start; gap: 24px; padding: 8px var(--pad) 48px; }
   .tiers { grid-template-columns: 1fr; max-width: 640px; }
   .team__grid { grid-template-columns: 1fr; }
   .team__photo { max-width: 480px; }
@@ -537,11 +541,9 @@ main > .hero { z-index: auto; }  /* no stacking context: the banner goes under t
   .nav__emblem { width: 38px; }
   .nav__word { font-size: 15px; }
   .nav__phone { display: none; }
-  .hero { min-height: 0; display: block; padding: 0; }
-  .hero__media { position: relative; height: 64svh; min-height: 400px; }
+  .hero__media { height: 64svh; min-height: 400px; }
   .hero__img { object-position: 50% 32%; }
-  .hero__shade { background: linear-gradient(180deg, rgba(8, 17, 13, .55) 0%, transparent 18%), linear-gradient(0deg, var(--gl-bg) 0%, rgba(8, 17, 13, .5) 18%, transparent 40%); }
-  .hero__content { padding: 4px var(--pad) 40px; gap: 24px; }
+  .hero__content { padding: 4px var(--pad) 40px; }
   .hero__title { font-size: clamp(40px, 11.5vw, 64px); }
   .hero__actions .btn { flex: 1 1 100%; }
   .split-head { grid-template-columns: 1fr; gap: 20px; }
