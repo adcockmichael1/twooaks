@@ -244,10 +244,13 @@ main > section { position: relative; z-index: 2; }
    HERO — the banner, the sunrise, the promise
    ===================================================================== */
 main > .hero { z-index: auto; }  /* no stacking context: the banner goes under the stream */
-.hero { position: relative; min-height: 100svh; display: grid; align-items: end; padding: 120px var(--pad) clamp(36px, 6vh, 64px); overflow: hidden; }
+.hero {
+  --banner-h: max(calc(100vw / 2.5), min(calc(100vw / 1.9), calc(100svh - 240px)));
+  position: relative; min-height: 100svh; display: block; padding: 0 var(--pad); overflow: hidden;
+}
 /* zoomed out: tall enough to read the logo, wide enough to show most of both oaks,
    short enough to leave room for the copy below the meeting point; never cropped vertically */
-.hero__media { position: absolute; top: 0; left: 0; right: 0; height: max(calc(100vw / 2.5), min(calc(100vw / 1.9), calc(100svh - 240px))); z-index: 0; overflow: hidden; }
+.hero__media { position: absolute; top: 0; left: 0; right: 0; height: var(--banner-h); z-index: 0; overflow: hidden; }
 /* the painting at its own proportions, centred and side-cropped exactly as cover would —
    so % inside it are painting coordinates (the canopy glows, the stream's start points) */
 .hero__media { display: flex; justify-content: center; }  /* centres the painting, overflowing both sides equally */
@@ -280,18 +283,22 @@ main > .hero { z-index: auto; }  /* no stacking context: the banner goes under t
     linear-gradient(180deg, rgba(8, 17, 13, .55) 0%, transparent 16%),
     linear-gradient(0deg, var(--gl-bg) 0%, rgba(8, 17, 13, .86) 18%, rgba(8, 17, 13, .2) 44%, transparent 60%);
 }
-.hero__content { position: relative; z-index: 2; width: 100%; max-width: var(--maxw); margin: 0 auto; display: grid; grid-template-columns: 8fr clamp(56px, 7vw, 120px) 4fr; column-gap: 0; row-gap: 24px; align-items: end; }
-/* a text-free column between headline and copy: the merged stream runs down it */
-.hero__gutter { align-self: stretch; }
-.hero__lead { display: grid; gap: 18px; min-width: 0; }
+/* a centred stack directly under the logo, starting on the grass below the crest;
+   the two stream arms run down either side of it and meet below the buttons */
+.hero__content {
+  position: relative; z-index: 2; width: 100%; max-width: min(1100px, 70vw); margin: 0 auto;
+  display: flex; flex-direction: column; align-items: center; gap: 24px; text-align: center;
+  padding-top: calc(var(--banner-h) * .73); padding-bottom: clamp(110px, 14vh, 170px);
+}
+.hero__lead { display: grid; gap: 18px; justify-items: center; min-width: 0; width: 100%; }
 .hero__lead .eyebrow { --d: 300ms; }
-.hero__title { font-family: var(--gl-font-display); font-weight: 400; font-size: clamp(44px, 4.9vw, 92px); line-height: .98; letter-spacing: -.015em; text-shadow: 0 6px 40px rgba(8, 17, 13, .8); }
+.hero__title { font-family: var(--gl-font-display); font-weight: 400; font-size: clamp(40px, 4.6vw, 84px); line-height: .98; letter-spacing: -.015em; text-wrap: balance; text-shadow: 0 6px 40px rgba(8, 17, 13, .8); }
 .hero__title .line { padding-bottom: .1em; margin-bottom: -.1em; }
 .hero__title .line:nth-child(2) .w { --d: 180ms; }
-.hero__side { display: grid; gap: 22px; min-width: 0; padding-bottom: 8px; }
-.hero__side > p { color: var(--gl-ink); opacity: .82; font-size: 16.5px; max-width: 40ch; --d: 900ms; text-shadow: 0 2px 18px rgba(8, 17, 13, .9); }
+.hero__side { display: grid; gap: 22px; justify-items: center; min-width: 0; width: 100%; }
+.hero__side > p { color: var(--gl-ink); opacity: .82; font-size: 16.5px; max-width: 46ch; margin-inline: auto; --d: 900ms; text-shadow: 0 2px 18px rgba(8, 17, 13, .9); }
 .hero__side > p.is-in, .is-open .hero__side > p { opacity: .82; }
-.hero__actions { display: flex; flex-wrap: wrap; gap: 12px; --d: 1100ms; }
+.hero__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; --d: 1100ms; }
 
 /* =====================================================================
    FOUNDATION — verse scrub
@@ -545,9 +552,8 @@ main > .hero { z-index: auto; }  /* no stacking context: the banner goes under t
   /* tablets and phones: the banner as its own block, the promise beneath it */
   .hero { min-height: 0; display: block; padding: 0; }
   .hero__media { position: relative; height: clamp(360px, calc(100vw / 1.9), 640px); }
-  .hero__gutter { display: none; }
   .hero__shade { background: linear-gradient(180deg, rgba(8, 17, 13, .55) 0%, transparent 18%), linear-gradient(0deg, var(--gl-bg) 0%, rgba(8, 17, 13, .5) 16%, transparent 38%); }
-  .hero__content { grid-template-columns: 1fr; align-items: start; gap: 24px; padding: 8px var(--pad) 48px; }
+  .hero__content { max-width: 640px; padding: 8px 0 120px; }
   .tiers { grid-template-columns: 1fr; max-width: 640px; }
   .team__grid { grid-template-columns: 1fr; }
   .team__photo { max-width: 480px; }
@@ -559,8 +565,8 @@ main > .hero { z-index: auto; }  /* no stacking context: the banner goes under t
   .nav__word { font-size: 15px; }
   .nav__phone { display: none; }
   .hero__media { height: 64svh; min-height: 400px; }
-  .hero__content { padding: 4px var(--pad) 40px; }
-  .hero__title { font-size: clamp(40px, 11.5vw, 64px); }
+  .hero__content { max-width: none; padding: 4px 34px 120px; }  /* wider side margins: the stream runs down the edges */
+  .hero__title { font-size: clamp(34px, 9.6vw, 56px); }
   .hero__actions .btn { flex: 1 1 100%; }
   .split-head { grid-template-columns: 1fr; gap: 20px; }
   .cards { grid-template-columns: 1fr; }

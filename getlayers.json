@@ -109,6 +109,6 @@
   "scene": {
     "id": "relay (template) — page-long particle stream",
     "file": "assets/js/stream.js",
-    "note": "Relay's stream-scene/stream-path/particle-stream lifted verbatim, plus — at the client's request, a composition change beyond Relay's contract — a second spine (BRANCH) sharing the renderer, bloom and every look uniform: two arms pour in from the top-left and top-right, meet in one pinched knot on the hill crest just below the banner logo, and continue down the page as one stream. Waypoints are anchored to section ids and must stay in document order. The two arms are born inside the oak canopies of the banner painting (waypoints in painting coordinates via hero-art) with a long fade-in so they materialise out of the leaves; canopy glows in CSS mark the source. Below that, waypoints use and the hero's text-free gutter column (xAt), and the canvas fades from 60% over the hero to full strength below it."
+    "note": "Relay's stream-scene/stream-path/particle-stream lifted verbatim, plus — at the client's request, a composition change beyond Relay's contract — a second spine (BRANCH) sharing the renderer, bloom and every look uniform. The two arms are born in the oak canopies of the banner painting (hero-art, painting coordinates), run down either side of the centred hero copy (hero-lead / hero-actions anchors) and meet below the buttons, then continue down the page as one stream. The canvas fades from 60% over the hero to full strength below it. Waypoints must stay in document order."
   }
 }

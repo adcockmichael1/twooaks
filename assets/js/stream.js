@@ -5,9 +5,9 @@
    template's page runtime, and — at the client's request, a deliberate
    composition change beyond Relay's contract — a second spine (BRANCH): a
    left arm: both arms rise out of the two oaks in the banner painting and
-   meet just below the hill crest under the banner logo. Hero waypoints are anchored to
-   the banner image and the hero's gutter column (resolvePath's `xAt`) so the
-   stream never crosses a word in the hero. CONFIG, shaders, tiering and the entrance are Relay's own.
+   wrap around the centred hero copy to meet below its buttons. Hero waypoints are
+   anchored to the banner painting (resolvePath's `xAt`) and the copy block, so
+   the stream never crosses a word in the hero. CONFIG, shaders, tiering and the entrance are Relay's own.
    Colours come from the --stream-* tokens in styles.css (gold + emerald). */
 /* ═══════════════════════════════════════════════════════════════════════
    THE PAGE-LONG PARTICLE STREAM — views/home/stream/stream-scene.ts,
@@ -287,65 +287,49 @@ const easeOut = (t) => 1 - Math.pow(1 - t, 3)
 
 /* ── the path (stream-path.ts): waypoints anchored to the page's blocks ── */
 /** Two Oaks path. The two arms are born inside the oak canopies of the banner
-    painting and draw their light out of the leaves: hero waypoints use
-    at/xAt "hero-art" — painting coordinates (the canopies sit near x 0.13 /
-    0.87, y 0.36; the lettering spans x 0.39–0.61 down to y 0.60; the crest is
-    at y ≈ 0.675). The main stream is the RIGHT arm: out of the right-hand oak,
-    along its lower branches, across the grass to the meeting point just below
-    the crest (the hot pinch), then — on desktop — down the empty gutter column
-    between the headline and the side copy, so it never crosses a word. The
-    LEFT arm (BRANCH) mirrors it out of the left-hand oak and melts in. */
+    painting (at/xAt "hero-art" — painting coordinates: canopies near x 0.13 /
+    0.87, y 0.36; lettering x 0.39–0.61 down to y 0.60; crest y ≈ 0.675).
+    Each arm flows out of its oak and down ITS OWN SIDE of the centred hero copy
+    (at "hero-lead" / "hero-actions", x as a share of the page column, outside the text column),
+    then the two curve in and meet BELOW the buttons (the hot pinch) and carry
+    on down the page as one. The main stream is the RIGHT arm; the LEFT arm
+    (BRANCH) mirrors it and melts in at the meeting point. */
 const A = { at: "hero-art", xAt: "hero-art" }
-const DESKTOP_ARMS = [
-  { ...A, x: 0.88, y: 0.24, z: -1.6 },
-  { ...A, x: 0.84, y: 0.44, z: -1.1 },
-  { ...A, x: 0.76, y: 0.6, z: -0.7, pinch: 0.45 },
-  { ...A, x: 0.62, y: 0.74, z: -0.3, pinch: 0.8 },
-  { ...A, x: 0.5, y: 0.79, z: 0, pinch: 1 },
+/* the copy's own elements (not #hero-copy, whose box starts at the top of the
+   hero because of its padding): the eyebrow+headline block and the buttons row */
+const L = { at: "hero-lead" }
+const B = { at: "hero-actions" }
+const arms = (side, meetY) => [
+  /* no pinch at the start: a pinch is also "heat", and a hot start blooms into a slab */
+  { ...A, x: 0.86, y: 0.22, z: -0.6 },
+  { ...A, x: 0.875, y: 0.45, z: -0.3 },
+  { ...L, x: side, y: 0.05, z: 0, pinch: 0.5 },
+  { ...B, x: side - 0.015, y: 0.5, z: 0, pinch: 0.6 },
+  { ...B, x: side - 0.14, y: meetY - 0.45, z: 0, pinch: 0.75 },   // ease the turn in under the buttons
+  { ...B, x: 0.5, y: meetY, z: 0, pinch: 1 },
 ]
-const PHONE_HERO = [
-  { ...A, x: 0.86, y: 0.3, z: -2.0 },
-  { ...A, x: 0.74, y: 0.7, z: -1.4, pinch: 0.5 },
-  { ...A, x: 0.69, y: 0.78, z: -1.0, pinch: 0.6 },
-  { ...A, x: 0.587, y: 0.8, z: -0.6, pinch: 0.9 },
-  { ...A, x: 0.5, y: 0.81, z: 0, pinch: 1 },
-  { ...A, x: 0.717, y: 0.98, z: -0.4, pinch: 0.7 },
-  { at: "hero", x: 1.5, y: 0.9, z: -0.4 },
+const mirror = (path) => path.map((p) => ({ ...p, x: 1 - p.x }))
+const PHONE_ARMS = [
+  { ...A, x: 0.86, y: 0.5, z: -0.3 },
+  { ...L, x: 1.02, y: 0.0, z: 0, pinch: 1 },
+  { ...B, x: 1.02, y: 1.08, z: 0, pinch: 1 },
+  { ...B, x: 0.5, y: 1.8, z: 0, pinch: 1 },
 ]
 const HERO = {
-  1440: [
-    ...DESKTOP_ARMS,
-    { at: "hero-copy", xAt: "hero-gutter", x: 0.5, y: -0.06, z: -0.1, pinch: 1 },
-    { at: "hero-copy", xAt: "hero-gutter", x: 0.5, y: 1.02, z: -0.2, pinch: 1 },
-  ],
-  1024: [
-    ...DESKTOP_ARMS,
-    { at: "hero-media", x: 1.2, y: 1.15, z: -0.4 },
-    { at: "hero", x: 1.4, y: 0.95, z: -0.4 },
-  ],
-  768: PHONE_HERO,
-  390: PHONE_HERO,
+  1440: arms(0.9, 2.4),
+  1024: arms(0.93, 2.4),
+  768: PHONE_ARMS,
+  390: PHONE_ARMS,
 }
-/** The left arm, per frame: a mirror of the right arm out of the left-hand oak,
-    ending at the meeting point plus one short step along the main stream's
-    heading, so it dissolves into the main stream instead of stopping. */
-const DESKTOP_BRANCH = [
-  { ...A, x: 0.12, y: 0.24, z: -1.6 },
-  { ...A, x: 0.16, y: 0.44, z: -1.1 },
-  { ...A, x: 0.24, y: 0.6, z: -0.7, pinch: 0.45 },
-  { ...A, x: 0.38, y: 0.74, z: -0.3, pinch: 0.8 },
-  { ...A, x: 0.5, y: 0.79, z: 0, pinch: 1 },
-  { ...A, x: 0.56, y: 0.83, z: -0.1 },
-]
-const PHONE_BRANCH = [
-  { ...A, x: 0.14, y: 0.3, z: -2.0 },
-  { ...A, x: 0.26, y: 0.7, z: -1.4, pinch: 0.5 },
-  { ...A, x: 0.31, y: 0.78, z: -1.0, pinch: 0.6 },
-  { ...A, x: 0.413, y: 0.8, z: -0.6, pinch: 0.9 },
-  { ...A, x: 0.5, y: 0.81, z: 0, pinch: 1 },
-  { ...A, x: 0.535, y: 0.85, z: -0.1 },
-]
-const BRANCH = { 1440: DESKTOP_BRANCH, 1024: DESKTOP_BRANCH, 768: PHONE_BRANCH, 390: PHONE_BRANCH }
+/** The left arm, per frame: the mirror of the right arm, plus one short step
+    past the meeting point along the main stream's heading, so it dissolves
+    into the main stream instead of stopping. */
+const BRANCH = {
+  1440: [...mirror(HERO[1440]), { ...B, x: 0.55, y: 3.2, z: -0.1 }],
+  1024: [...mirror(HERO[1024]), { ...B, x: 0.55, y: 3.2, z: -0.1 }],
+  768: [...mirror(PHONE_ARMS), { ...B, x: 0.55, y: 2.15, z: -0.1 }],
+  390: [...mirror(PHONE_ARMS), { ...B, x: 0.55, y: 2.15, z: -0.1 }],
+}
 /** Below the hero, shared by every frame: wide bends down the page, through
     the cross between the two oaks, and out through the left edge above the
     contact section. Every waypoint sits lower than the one before. */
