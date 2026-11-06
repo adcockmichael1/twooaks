@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en" class="is-loading">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Two Oaks Technologies — Premium Website Design</title>
+<meta name="description" content="Two Oaks Technologies designs and builds premium, hand-crafted websites for brands built to endure. Faith. Family. Innovation.">
+<meta name="theme-color" content="#05110b">
+<meta property="og:title" content="Two Oaks Technologies — Premium Website Design">
+<meta property="og:description" content="Premium, hand-crafted websites for brands built to endure. Faith. Family. Innovation.">
+<meta property="og:type" content="website">
+<link rel="icon" href="assets/brand/emblem.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Italiana&family=Outfit:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="assets/css/styles.css">
+<script type="importmap">
+{
+  "imports": {
+    "three": "./assets/vendor/three/three.module.js",
+    "three/addons/": "./assets/vendor/three/jsm/"
+  }
+}
+</script>
+</head>
+<body>
+
+<!-- Shared emblem: shield · cross · young oak · mature oak.
+     Swap these paths for the final vector logo when it is ready. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="g-gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f4dc9c"/>
+      <stop offset=".45" stop-color="#c9a55a"/>
+      <stop offset="1" stop-color="#8f6d2f"/>
+    </linearGradient>
+    <symbol id="emblem" viewBox="0 0 120 140">
+      <g fill="none" stroke="url(#g-gold)" stroke-linecap="round" stroke-linejoin="round">
+        <path class="e-shield" stroke-width="3" d="M60 4 L110 18 V62 C110 98 88 122 60 136 C32 122 10 98 10 62 V18 Z"/>
+        <path class="e-shield-in" stroke-width="1.2" d="M60 11 L103 23 V62 C103 93 84 114 60 127 C36 114 17 93 17 62 V23 Z"/>
+        <path class="e-cross" stroke-width="1.6" d="M56.5 24 H63.5 V40 H75 V47 H63.5 V96 H56.5 V47 H45 V40 H56.5 Z"/>
+        <path class="e-ground" stroke-width="1.4" d="M22 100 C40 92 80 92 98 100"/>
+        <path class="e-tree" stroke-width="1.4" d="M22 74 C16 72 16 62 22 60 C21 53 29 49 33 53 C36 47 45 49 45 56 C51 57 51 67 46 70 C47 76 38 78 35 74 C31 78 24 78 22 74 Z"/>
+        <path class="e-trunk" stroke-width="1.6" d="M34 98 C34 90 35 84 33.5 74 M33.8 85 C30.5 81 28 80 25.5 77 M34.2 87 C37 83 39.5 82 42 79"/>
+        <path class="e-tree" stroke-width="1.4" d="M71 72 C65 70 65 59 71 56 C70 48 78 44 84 47 C88 41 98 43 99 50 C105 52 105 62 101 65 C103 72 96 77 91 74 C87 79 77 79 74 75 Z"/>
+        <path class="e-trunk" stroke-width="2" d="M85 98 C84 91 86 84 84.5 74 M85 98 C80 99.5 76 100.5 73 100 M85 98 C90 99.5 94 100.5 97 100 M84.6 86 C80 82 76.5 80 73.5 77 M85 84 C89 80 92.5 79 96.5 75 M84.6 79.5 C84 77 82 75 80 72.5"/>
+      </g>
+      <g fill="url(#g-gold)" opacity=".16">
+        <path d="M22 74 C16 72 16 62 22 60 C21 53 29 49 33 53 C36 47 45 49 45 56 C51 57 51 67 46 70 C47 76 38 78 35 74 C31 78 24 78 22 74 Z"/>
+        <path d="M71 72 C65 70 65 59 71 56 C70 48 78 44 84 47 C88 41 98 43 99 50 C105 52 105 62 101 65 C103 72 96 77 91 74 C87 79 77 79 74 75 Z"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ============ LOADER — no counter: the emblem draws itself, a hairline is the timer ============ -->
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader__panel loader__panel--top"></div>
+  <div class="loader__panel loader__panel--bottom"></div>
+  <div class="loader__inner">
+    <svg class="loader__emblem" viewBox="0 0 120 140">
+      <g fill="none" stroke="url(#g-gold)" stroke-linecap="round" stroke-linejoin="round">
+        <path pathLength="1" stroke-width="2.4" d="M60 4 L110 18 V62 C110 98 88 122 60 136 C32 122 10 98 10 62 V18 Z"/>
+        <path pathLength="1" stroke-width="1" d="M60 11 L103 23 V62 C103 93 84 114 60 127 C36 114 17 93 17 62 V23 Z"/>
+        <path pathLength="1" stroke-width="1.4" d="M56.5 24 H63.5 V40 H75 V47 H63.5 V96 H56.5 V47 H45 V40 H56.5 Z"/>
+        <path pathLength="1" stroke-width="1.2" d="M22 100 C40 92 80 92 98 100"/>
+        <path pathLength="1" stroke-width="1.2" d="M22 74 C16 72 16 62 22 60 C21 53 29 49 33 53 C36 47 45 49 45 56 C51 57 51 67 46 70 C47 76 38 78 35 74 C31 78 24 78 22 74 Z"/>
+        <path pathLength="1" stroke-width="1.4" d="M34 98 C34 90 35 84 33.5 74"/>
+        <path pathLength="1" stroke-width="1.2" d="M71 72 C65 70 65 59 71 56 C70 48 78 44 84 47 C88 41 98 43 99 50 C105 52 105 62 101 65 C103 72 96 77 91 74 C87 79 77 79 74 75 Z"/>
+        <path pathLength="1" stroke-width="1.8" d="M85 98 C84 91 86 84 84.5 74"/>
+      </g>
+    </svg>
+    <div class="loader__word">Two Oaks</div>
+    <div class="loader__line"><span></span></div>
+    <div class="loader__sub">Faith · Family · Innovation</div>
+  </div>
+</div>
+
+<!-- persistent chrome -->
+<div class="grain" aria-hidden="true"></div>
+<div class="cursor" aria-hidden="true"><span class="cursor__dot"></span><span class="cursor__ring"></span></div>
+<canvas id="hero-scene" aria-hidden="true"></canvas>
+
+<header class="nav" id="nav">
+  <a class="nav__brand" href="#top" aria-label="Two Oaks Technologies — home">
+    <svg class="nav__emblem" viewBox="0 0 120 140" aria-hidden="true"><use href="#emblem"/></svg>
+    <span class="nav__word">Two Oaks<small>Technologies</small></span>
+  </a>
+  <nav class="nav__links" aria-label="Primary">
+    <a href="#studio" data-roll>Studio</a>
+    <a href="#craft" data-roll>Craft</a>
+    <a href="#name" data-roll>Our Name</a>
+    <a href="#process" data-roll>Process</a>
+    <a href="#values" data-roll>Values</a>
+  </nav>
+  <a class="btn btn--pill nav__cta" href="#contact" data-magnetic><span>Start a project</span><i aria-hidden="true">→</i></a>
+</header>
+
+<main id="top">
+
+  <!-- ============ HERO · composition: laocoon-hero ============ -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="gridlines" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+
+    <div class="hero__badge" aria-hidden="true">
+      <svg viewBox="0 0 200 200" class="hero__ring">
+        <defs><path id="ring-path" d="M100 100 m-78 0 a78 78 0 1 1 156 0 a78 78 0 1 1 -156 0"/></defs>
+        <text><textPath href="#ring-path">FAITH · FAMILY · INNOVATION · PROVERBS 3:5–6 · </textPath></text>
+      </svg>
+      <svg class="hero__badge-emblem" viewBox="0 0 120 140"><use href="#emblem"/></svg>
+    </div>
+
+    <div class="hero__content">
+      <p class="eyebrow hero__eyebrow" data-hero>Premium Website Design Studio</p>
+      <h1 class="hero__title" id="hero-title">
+        <span class="line" data-split="chars">Rooted in</span>
+        <span class="line" data-split="chars"><em class="gold">Excellence.</em></span>
+      </h1>
+      <div class="hero__cols">
+        <p data-hero>Two Oaks Technologies designs and builds premium websites for brands that intend to stand for generations — crafted with patience, engineered with precision.</p>
+        <p data-hero>Every project begins on a foundation we trust, and grows into something worth passing on.</p>
+      </div>
+      <div class="hero__actions" data-hero>
+        <a class="btn btn--solid" href="#contact" data-magnetic><span>Plant your project</span><i aria-hidden="true">→</i></a>
+        <a class="btn btn--ghost" href="#craft" data-magnetic><span>See our craft</span></a>
+      </div>
+    </div>
+
+    <div class="hero__foot" data-hero>
+      <span class="hero__scroll"><i></i>Scroll</span>
+      <span class="hero__meta">Faith. Family. Innovation.</span>
+    </div>
+  </section>
+
+  <!-- ============ FOUNDATION · composition: artist-statement ============ -->
+  <section class="foundation" id="studio" aria-label="Our foundation">
+    <div class="wrap wrap--narrow">
+      <p class="eyebrow" data-reveal><span class="rule"></span>Our Foundation</p>
+      <blockquote class="foundation__verse" data-scrub-words>
+        Trust in the Lord with all your heart and lean not on your own understanding; in all your ways submit to Him, and He will make your paths straight.
+      </blockquote>
+      <p class="foundation__sig" data-reveal>— Proverbs 3:5–6</p>
+    </div>
+  </section>
+
+  <!-- ============ CRAFT · composition: vexon-showcase ============ -->
+  <section class="craft" id="craft" aria-labelledby="craft-title">
+    <div class="wrap">
+      <div class="craft__head">
+        <p class="eyebrow" data-reveal>/ 01 — What we craft</p>
+        <div>
+          <h2 class="h2" id="craft-title" data-split="words">Digital estates, designed with the patience of an oak.</h2>
+          <p class="lede" data-reveal>We don't do templates or shortcuts. Every site is designed from a blank page around your story, then engineered to be fast, accessible and effortless to grow.</p>
+        </div>
+      </div>
+
+      <div class="cards">
+        <article class="card" data-tilt data-reveal>
+          <span class="card__corner card__corner--tl"></span><span class="card__corner card__corner--tr"></span>
+          <span class="card__corner card__corner--bl"></span><span class="card__corner card__corner--br"></span>
+          <span class="card__index">[ 01 ]</span>
+          <div class="card__art card__art--rings" aria-hidden="true"><svg viewBox="0 0 200 200" data-rings></svg></div>
+          <div class="card__body">
+            <h3>Brand &amp; Web Design</h3>
+            <p>Identity systems and bespoke interfaces with an editorial eye — every pixel considered, nothing borrowed.</p>
+          </div>
+          <span class="card__sheen" aria-hidden="true"></span>
+        </article>
+        <article class="card" data-tilt data-reveal>
+          <span class="card__corner card__corner--tl"></span><span class="card__corner card__corner--tr"></span>
+          <span class="card__corner card__corner--bl"></span><span class="card__corner card__corner--br"></span>
+          <span class="card__index">[ 02 ]</span>
+          <div class="card__art card__art--blueprint" aria-hidden="true">
+            <svg viewBox="0 0 200 200">
+              <g class="bp-grid"></g>
+              <g class="bp-draw" fill="none" stroke="url(#g-gold)" stroke-width="1.1">
+                <rect x="34" y="40" width="132" height="120" rx="4" pathLength="1"/>
+                <path d="M34 58 H166" pathLength="1"/>
+                <circle cx="44" cy="49" r="2.4" pathLength="1"/><circle cx="52" cy="49" r="2.4" pathLength="1"/><circle cx="60" cy="49" r="2.4" pathLength="1"/>
+                <path d="M48 78 H112 M48 90 H136 M48 102 H96" pathLength="1"/>
+                <rect x="48" y="116" width="48" height="28" rx="2" pathLength="1"/>
+                <rect x="104" y="116" width="48" height="28" rx="2" pathLength="1"/>
+                <path d="M128 78 l10 8 -10 8" pathLength="1"/>
+              </g>
+            </svg>
+          </div>
+          <div class="card__body">
+            <h3>Engineering</h3>
+            <p>Hand-built, lightning-fast front-ends and a content system your team will actually enjoy using.</p>
+          </div>
+          <span class="card__sheen" aria-hidden="true"></span>
+        </article>
+        <article class="card" data-tilt data-reveal>
+          <span class="card__corner card__corner--tl"></span><span class="card__corner card__corner--tr"></span>
+          <span class="card__corner card__corner--bl"></span><span class="card__corner card__corner--br"></span>
+          <span class="card__index">[ 03 ]</span>
+          <div class="card__art card__art--sprout" aria-hidden="true"><svg viewBox="0 0 200 200" data-sprout></svg></div>
+          <div class="card__body">
+            <h3>Growth &amp; Stewardship</h3>
+            <p>SEO, performance tuning and ongoing care — so your site keeps growing long after launch day.</p>
+          </div>
+          <span class="card__sheen" aria-hidden="true"></span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ OUR NAME · composition: negantropy-entropy (corner-loaded split) ============ -->
+  <section class="name" id="name" aria-labelledby="name-title">
+    <div class="name__sticky">
+      <svg class="oaks" id="oaks" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax meet" aria-hidden="true"></svg>
+      <div class="name__copy wrap">
+        <h2 class="name__title" id="name-title">
+          <span class="line" data-split="chars">Two Oaks.</span>
+          <span class="line" data-split="chars"><em class="gold">One Root.</em></span>
+        </h2>
+        <div class="name__side">
+          <p class="index" data-reveal>( II )<span class="rule"></span>The Name</p>
+          <p data-reveal>A young oak grows beside a mature one — sheltered, taught, strengthened, until it stands tall on its own.</p>
+          <p data-reveal>That is how we work with every client: seasoned craft standing beside your vision. And at the centre of it all, the cross that roots us.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROCESS · composition: negantropy-refusal (heading + metric receipt) ============ -->
+  <section class="process" id="process" aria-labelledby="process-title">
+    <div class="wrap">
+      <div class="process__head">
+        <p class="index" data-reveal>( III )<span class="rule"></span>How we grow it</p>
+        <h2 class="h2" id="process-title" data-split="words">From a single seed to something that shades generations.</h2>
+      </div>
+      <ol class="steps">
+        <li class="steps__line" aria-hidden="true"><span></span></li>
+        <li class="step" data-reveal><span class="step__n">01</span><h3>Root</h3><p>Discovery, strategy and listening. We learn your story, your people and what success actually means.</p></li>
+        <li class="step" data-reveal><span class="step__n">02</span><h3>Grow</h3><p>Art direction and design. Moodboards become a bespoke visual language and pixel-perfect pages.</p></li>
+        <li class="step" data-reveal><span class="step__n">03</span><h3>Branch</h3><p>Engineering and motion. Hand-built, accessible code with the animation that makes it feel alive.</p></li>
+        <li class="step" data-reveal><span class="step__n">04</span><h3>Bear Fruit</h3><p>Launch and stewardship. Performance, SEO and care that keep your site flourishing season after season.</p></li>
+      </ol>
+      <dl class="metrics">
+        <div data-reveal><dt><span data-count="100">0</span>%</dt><dd>Custom-designed — never a template</dd></div>
+        <div data-reveal><dt><span data-count="90">0</span>+</dt><dd>Lighthouse performance target</dd></div>
+        <div data-reveal><dt>AA</dt><dd>WCAG accessibility standard</dd></div>
+        <div data-reveal><dt><span data-count="1">0</span>:1</dt><dd>Direct line to your designer</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ============ VALUES · composition: clarix-statement (alternating edge) ============ -->
+  <section class="values" id="values" aria-label="Our values">
+    <div class="value value--left">
+      <span class="value__n" data-reveal>i.</span>
+      <h2 class="value__word" data-split="chars"><em class="gold">Faith</em></h2>
+      <p class="value__line" data-reveal>that grounds every decision we make.</p>
+    </div>
+    <div class="value value--right">
+      <span class="value__n" data-reveal>ii.</span>
+      <h2 class="value__word" data-split="chars"><em class="gold">Family</em></h2>
+      <p class="value__line" data-reveal>that treats every client like one of our own.</p>
+    </div>
+    <div class="value value--left">
+      <span class="value__n" data-reveal>iii.</span>
+      <h2 class="value__word" data-split="chars"><em class="gold">Innovation</em></h2>
+      <p class="value__line" data-reveal>that keeps us growing toward the light.</p>
+    </div>
+  </section>
+
+  <!-- ============ CTA · compositions: negantropy-persist + altitude-cta capsule ============ -->
+  <section class="cta" id="contact" aria-labelledby="cta-title">
+    <canvas id="cannelure" aria-hidden="true"></canvas>
+    <div class="cta__veil" aria-hidden="true"></div>
+    <div class="cta__inner">
+      <p class="index" data-reveal>( VI )<span class="rule"></span>Begin</p>
+      <h2 class="cta__title" id="cta-title">
+        <span class="line" data-split="chars">Plant something</span>
+        <span class="line" data-split="chars"><em class="gold">that lasts.</em></span>
+      </h2>
+      <p class="cta__body" data-reveal>Tell us a little about your vision. We'll come back with ideas, an honest timeline and a clear path forward.</p>
+      <form class="capsule" id="enquiry" data-reveal novalidate>
+        <label class="sr-only" for="f-name">Your name</label>
+        <input id="f-name" name="name" type="text" placeholder="Your name" autocomplete="name" required>
+        <label class="sr-only" for="f-email">Email address</label>
+        <input id="f-email" name="email" type="email" placeholder="Email address" autocomplete="email" required>
+        <button class="btn btn--solid" type="submit" data-magnetic><span>Start a project</span><i aria-hidden="true">→</i></button>
+      </form>
+      <p class="capsule__note" id="enquiry-note" role="status" aria-live="polite"></p>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer__top">
+    <div class="footer__brand">
+      <svg viewBox="0 0 120 140" aria-hidden="true"><use href="#emblem"/></svg>
+      <p>Premium websites for brands built to endure.</p>
+    </div>
+    <div class="footer__cols">
+      <div><h4>Studio</h4><a href="#studio" data-roll>Foundation</a><a href="#craft" data-roll>Craft</a><a href="#process" data-roll>Process</a></div>
+      <div><h4>Connect</h4><a href="#contact" data-roll>Start a project</a><a href="mailto:hello@twooakstechnologies.com" data-roll>Email us</a></div>
+    </div>
+  </div>
+  <div class="footer__mark" aria-hidden="true" data-split="chars">TWO OAKS</div>
+  <div class="wrap footer__base">
+    <span>© <span id="year">2026</span> Two Oaks Technologies</span>
+    <span class="gold-ink">Founded on Proverbs 3:5–6</span>
+    <span>Faith. Family. Innovation.</span>
+  </div>
+</footer>
+
+<script src="assets/vendor/lenis.min.js" defer></script>
+<script src="assets/js/main.js" defer></script>
+<script type="module" src="assets/js/dust-scene.js"></script>
+<script src="assets/js/cannelure.js" defer></script>
+</body>
+</html>

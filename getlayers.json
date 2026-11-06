@@ -1,0 +1,27 @@
+{
+  "project": "Two Oaks Technologies — landing page",
+  "mode": "build-site (build unique, section by section)",
+  "target": "other (static HTML / CSS / JS, no build step)",
+  "brief": {
+    "pitch": "Premium website design company. Dark forest green and gold. Shield logo with a cross, a young oak and a mature oak. Faith. Family. Innovation. Founded on Proverbs 3:5-6.",
+    "axes": { "dimensionality": ["3d", "depth"], "mood": ["luxe", "organic"], "tone": ["dark"], "motionEnergy": ["lively"], "density": ["sparse", "balanced"] }
+  },
+  "style": {
+    "id": "laocoon-style",
+    "note": "Committed for its type system (Italiana display + Outfit body) and its single-luminous-subject-on-a-dark-field voice. Colour re-dressed to the brand: forest emerald ground, antique gold accent. Tokens live in assets/css/styles.css :root (--gl-*)."
+  },
+  "palettes": { "hero-scene": "halcyon-palette (gold) → overridden in CONFIG to emerald + gold", "cta-gradient": "jade-depths → overridden in CONFIG to emerald + gold" },
+  "fonts": { "display": "Italiana", "body": "Outfit 300/400/500" },
+  "sections": [
+    { "id": "loader",     "composition": "house reveal choreography (design B: no counter)", "asset": "custom emblem line-draw" },
+    { "id": "hero",       "composition": "laocoon-hero",        "asset": "scene: flying-dust (assets/js/dust-scene.js)" },
+    { "id": "foundation", "composition": "artist-statement",    "asset": "scroll-lit verse" },
+    { "id": "craft",      "composition": "vexon-showcase",      "asset": "generative SVG art per card" },
+    { "id": "name",       "composition": "negantropy-entropy",  "asset": "generative SVG oaks grown on scroll" },
+    { "id": "process",    "composition": "negantropy-refusal",  "asset": "drawn timeline + metric receipt" },
+    { "id": "values",     "composition": "clarix-statement",    "asset": "alternating-edge display words" },
+    { "id": "contact",    "composition": "negantropy-persist + altitude-cta", "asset": "gradient: cannelure (assets/js/cannelure.js)" },
+    { "id": "footer",     "composition": "giant wordmark footer", "asset": null }
+  ],
+  "rules": ["One Style per site", "One WebGL scene above the fold", "Tint scenes via CONFIG only — never the shader", "Gate flips at the start of the curtain exit"]
+}
