@@ -3,13 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Two Oaks Technologies — Premium Website Design</title>
-<meta name="description" content="Two Oaks Technologies designs and builds premium, hand-crafted websites for brands built to endure. Faith. Family. Innovation.">
-<meta name="theme-color" content="#05110b">
-<meta property="og:title" content="Two Oaks Technologies — Premium Website Design">
-<meta property="og:description" content="Premium, hand-crafted websites for brands built to endure. Faith. Family. Innovation.">
+<title>Two Oaks Technologies | Websites, Google, Social &amp; Apps — Huntsville, AL</title>
+<meta name="description" content="Two Oaks Technologies — websites, Google Business Profile, social, reviews, and custom apps in Huntsville, Alabama. One local partner, one bill. Faith. Family. Innovation.">
+<meta name="theme-color" content="#08110D">
+<meta property="og:title" content="Two Oaks Technologies — Huntsville, AL">
+<meta property="og:description" content="Your whole digital footprint, under one canopy. Websites, Google, social, reviews, and custom apps — built and tended by one local partner.">
 <meta property="og:type" content="website">
-<link rel="icon" href="assets/brand/emblem.svg" type="image/svg+xml">
+<meta property="og:image" content="assets/img/og-image.jpg">
+<link rel="icon" href="assets/img/emblem.png" type="image/png">
+<link rel="preload" as="image" href="assets/img/hero-banner.webp" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Italiana&family=Outfit:wght@300;400;500&display=swap">
@@ -25,51 +27,12 @@
 </head>
 <body>
 
-<!-- Shared emblem: shield · cross · young oak · mature oak.
-     Swap these paths for the final vector logo when it is ready. -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <defs>
-    <linearGradient id="g-gold" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#f4dc9c"/>
-      <stop offset=".45" stop-color="#c9a55a"/>
-      <stop offset="1" stop-color="#8f6d2f"/>
-    </linearGradient>
-    <symbol id="emblem" viewBox="0 0 120 140">
-      <g fill="none" stroke="url(#g-gold)" stroke-linecap="round" stroke-linejoin="round">
-        <path class="e-shield" stroke-width="3" d="M60 4 L110 18 V62 C110 98 88 122 60 136 C32 122 10 98 10 62 V18 Z"/>
-        <path class="e-shield-in" stroke-width="1.2" d="M60 11 L103 23 V62 C103 93 84 114 60 127 C36 114 17 93 17 62 V23 Z"/>
-        <path class="e-cross" stroke-width="1.6" d="M56.5 24 H63.5 V40 H75 V47 H63.5 V96 H56.5 V47 H45 V40 H56.5 Z"/>
-        <path class="e-ground" stroke-width="1.4" d="M22 100 C40 92 80 92 98 100"/>
-        <path class="e-tree" stroke-width="1.4" d="M22 74 C16 72 16 62 22 60 C21 53 29 49 33 53 C36 47 45 49 45 56 C51 57 51 67 46 70 C47 76 38 78 35 74 C31 78 24 78 22 74 Z"/>
-        <path class="e-trunk" stroke-width="1.6" d="M34 98 C34 90 35 84 33.5 74 M33.8 85 C30.5 81 28 80 25.5 77 M34.2 87 C37 83 39.5 82 42 79"/>
-        <path class="e-tree" stroke-width="1.4" d="M71 72 C65 70 65 59 71 56 C70 48 78 44 84 47 C88 41 98 43 99 50 C105 52 105 62 101 65 C103 72 96 77 91 74 C87 79 77 79 74 75 Z"/>
-        <path class="e-trunk" stroke-width="2" d="M85 98 C84 91 86 84 84.5 74 M85 98 C80 99.5 76 100.5 73 100 M85 98 C90 99.5 94 100.5 97 100 M84.6 86 C80 82 76.5 80 73.5 77 M85 84 C89 80 92.5 79 96.5 75 M84.6 79.5 C84 77 82 75 80 72.5"/>
-      </g>
-      <g fill="url(#g-gold)" opacity=".16">
-        <path d="M22 74 C16 72 16 62 22 60 C21 53 29 49 33 53 C36 47 45 49 45 56 C51 57 51 67 46 70 C47 76 38 78 35 74 C31 78 24 78 22 74 Z"/>
-        <path d="M71 72 C65 70 65 59 71 56 C70 48 78 44 84 47 C88 41 98 43 99 50 C105 52 105 62 101 65 C103 72 96 77 91 74 C87 79 77 79 74 75 Z"/>
-      </g>
-    </symbol>
-  </defs>
-</svg>
-
-<!-- ============ LOADER — no counter: the emblem draws itself, a hairline is the timer ============ -->
+<!-- ============ LOADER — no counter: the emblem rises out of the ground, a hairline is the timer ============ -->
 <div class="loader" id="loader" aria-hidden="true">
   <div class="loader__panel loader__panel--top"></div>
   <div class="loader__panel loader__panel--bottom"></div>
   <div class="loader__inner">
-    <svg class="loader__emblem" viewBox="0 0 120 140">
-      <g fill="none" stroke="url(#g-gold)" stroke-linecap="round" stroke-linejoin="round">
-        <path pathLength="1" stroke-width="2.4" d="M60 4 L110 18 V62 C110 98 88 122 60 136 C32 122 10 98 10 62 V18 Z"/>
-        <path pathLength="1" stroke-width="1" d="M60 11 L103 23 V62 C103 93 84 114 60 127 C36 114 17 93 17 62 V23 Z"/>
-        <path pathLength="1" stroke-width="1.4" d="M56.5 24 H63.5 V40 H75 V47 H63.5 V96 H56.5 V47 H45 V40 H56.5 Z"/>
-        <path pathLength="1" stroke-width="1.2" d="M22 100 C40 92 80 92 98 100"/>
-        <path pathLength="1" stroke-width="1.2" d="M22 74 C16 72 16 62 22 60 C21 53 29 49 33 53 C36 47 45 49 45 56 C51 57 51 67 46 70 C47 76 38 78 35 74 C31 78 24 78 22 74 Z"/>
-        <path pathLength="1" stroke-width="1.4" d="M34 98 C34 90 35 84 33.5 74"/>
-        <path pathLength="1" stroke-width="1.2" d="M71 72 C65 70 65 59 71 56 C70 48 78 44 84 47 C88 41 98 43 99 50 C105 52 105 62 101 65 C103 72 96 77 91 74 C87 79 77 79 74 75 Z"/>
-        <path pathLength="1" stroke-width="1.8" d="M85 98 C84 91 86 84 84.5 74"/>
-      </g>
-    </svg>
+    <div class="loader__emblem"><img src="assets/img/emblem.png" alt="" width="560" height="434"></div>
     <div class="loader__word">Two Oaks</div>
     <div class="loader__line"><span></span></div>
     <div class="loader__sub">Faith · Family · Innovation</div>
@@ -79,63 +42,59 @@
 <!-- persistent chrome -->
 <div class="grain" aria-hidden="true"></div>
 <div class="cursor" aria-hidden="true"><span class="cursor__dot"></span><span class="cursor__ring"></span></div>
-<canvas id="hero-scene" aria-hidden="true"></canvas>
+<!-- the page-long particle stream (GetLayers "Relay"): opaque black, screen-blended -->
+<canvas id="stream" aria-hidden="true"></canvas>
 
 <header class="nav" id="nav">
   <a class="nav__brand" href="#top" aria-label="Two Oaks Technologies — home">
-    <svg class="nav__emblem" viewBox="0 0 120 140" aria-hidden="true"><use href="#emblem"/></svg>
+    <img class="nav__emblem" src="assets/img/emblem.png" alt="" width="560" height="434">
     <span class="nav__word">Two Oaks<small>Technologies</small></span>
   </a>
   <nav class="nav__links" aria-label="Primary">
-    <a href="#studio" data-roll>Studio</a>
-    <a href="#craft" data-roll>Craft</a>
-    <a href="#name" data-roll>Our Name</a>
-    <a href="#process" data-roll>Process</a>
-    <a href="#values" data-roll>Values</a>
+    <a href="#services" data-roll>Services</a>
+    <a href="#work" data-roll>Work</a>
+    <a href="#offer" data-roll>Pricing</a>
+    <a href="#team" data-roll>About</a>
+    <a href="#contact" data-roll>Contact</a>
   </nav>
-  <a class="btn btn--pill nav__cta" href="#contact" data-magnetic><span>Start a project</span><i aria-hidden="true">→</i></a>
+  <div class="nav__end">
+    <a class="nav__phone" href="tel:+12565290546">256-529-0546</a>
+    <a class="btn btn--pill nav__cta" href="#contact" data-magnetic><span>Free audit</span><i aria-hidden="true">→</i></a>
+  </div>
 </header>
 
 <main id="top">
 
-  <!-- ============ HERO · composition: laocoon-hero ============ -->
-  <section class="hero" aria-labelledby="hero-title">
-    <div class="gridlines" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-
-    <div class="hero__badge" aria-hidden="true">
-      <svg viewBox="0 0 200 200" class="hero__ring">
-        <defs><path id="ring-path" d="M100 100 m-78 0 a78 78 0 1 1 156 0 a78 78 0 1 1 -156 0"/></defs>
-        <text><textPath href="#ring-path">FAITH · FAMILY · INNOVATION · PROVERBS 3:5–6 · </textPath></text>
-      </svg>
-      <svg class="hero__badge-emblem" viewBox="0 0 120 140"><use href="#emblem"/></svg>
+  <!-- ============ HERO · the banner, then the promise ============ -->
+  <section class="hero" id="hero" aria-labelledby="hero-title">
+    <div class="hero__media">
+      <img class="hero__img" src="assets/img/hero-banner.webp" alt="Two Oaks Technologies emblem above a hill at sunrise between two oak trees, with the words Faith. Family. Innovation. Founded on Proverbs 3:5–6." width="1983" height="793" fetchpriority="high" decoding="async">
+      <span class="hero__sun" aria-hidden="true"></span>
+      <span class="hero__shade" aria-hidden="true"></span>
     </div>
 
     <div class="hero__content">
-      <p class="eyebrow hero__eyebrow" data-hero>Premium Website Design Studio</p>
-      <h1 class="hero__title" id="hero-title">
-        <span class="line" data-split="chars">Rooted in</span>
-        <span class="line" data-split="chars"><em class="gold">Excellence.</em></span>
-      </h1>
-      <div class="hero__cols">
-        <p data-hero>Two Oaks Technologies designs and builds premium websites for brands that intend to stand for generations — crafted with patience, engineered with precision.</p>
-        <p data-hero>Every project begins on a foundation we trust, and grows into something worth passing on.</p>
+      <div class="hero__lead">
+        <p class="eyebrow" data-hero>Huntsville, Alabama</p>
+        <h1 class="hero__title" id="hero-title">
+          <span class="line" data-split="words">Your whole digital footprint,</span>
+          <span class="line" data-split="words">under one <em class="gold">canopy.</em></span>
+        </h1>
       </div>
-      <div class="hero__actions" data-hero>
-        <a class="btn btn--solid" href="#contact" data-magnetic><span>Plant your project</span><i aria-hidden="true">→</i></a>
-        <a class="btn btn--ghost" href="#craft" data-magnetic><span>See our craft</span></a>
+      <div class="hero__side">
+        <p data-hero>Websites, Google, social, reviews, and custom apps — built and tended by one local partner, on a single bill.</p>
+        <div class="hero__actions" data-hero>
+          <a class="btn btn--solid" href="mailto:mike@two-oaks-technologies.com?subject=Free%2030-minute%20audit" data-magnetic><span>Book a free 30-minute audit</span><i aria-hidden="true">→</i></a>
+          <a class="btn btn--ghost" href="tel:+12565290546" data-magnetic><span>Call or text 256-529-0546</span></a>
+        </div>
       </div>
-    </div>
-
-    <div class="hero__foot" data-hero>
-      <span class="hero__scroll"><i></i>Scroll</span>
-      <span class="hero__meta">Faith. Family. Innovation.</span>
     </div>
   </section>
 
   <!-- ============ FOUNDATION · composition: artist-statement ============ -->
   <section class="foundation" id="studio" aria-label="Our foundation">
     <div class="wrap wrap--narrow">
-      <p class="eyebrow" data-reveal><span class="rule"></span>Our Foundation</p>
+      <p class="eyebrow" data-reveal><span class="rule"></span>Built on Proverbs 3:5–6</p>
       <blockquote class="foundation__verse" data-scrub-words>
         Trust in the Lord with all your heart and lean not on your own understanding; in all your ways submit to Him, and He will make your paths straight.
       </blockquote>
@@ -143,14 +102,14 @@
     </div>
   </section>
 
-  <!-- ============ CRAFT · composition: vexon-showcase ============ -->
-  <section class="craft" id="craft" aria-labelledby="craft-title">
+  <!-- ============ GETTING FOUND · composition: vexon-showcase ============ -->
+  <section class="services" id="services" aria-labelledby="services-title">
     <div class="wrap">
-      <div class="craft__head">
-        <p class="eyebrow" data-reveal>/ 01 — What we craft</p>
+      <div class="split-head">
+        <p class="eyebrow" data-reveal>/ Getting found</p>
         <div>
-          <h2 class="h2" id="craft-title" data-split="words">Digital estates, designed with the patience of an oak.</h2>
-          <p class="lede" data-reveal>We don't do templates or shortcuts. Every site is designed from a blank page around your story, then engineered to be fast, accessible and effortless to grow.</p>
+          <h2 class="h2" id="services-title" data-split="words">Four parts of getting found.</h2>
+          <p class="lede" data-reveal>Miss one and you lose the customer who was ready to call. We handle all four.</p>
         </div>
       </div>
 
@@ -159,49 +118,139 @@
           <span class="card__corner card__corner--tl"></span><span class="card__corner card__corner--tr"></span>
           <span class="card__corner card__corner--bl"></span><span class="card__corner card__corner--br"></span>
           <span class="card__index">[ 01 ]</span>
-          <div class="card__art card__art--rings" aria-hidden="true"><svg viewBox="0 0 200 200" data-rings></svg></div>
-          <div class="card__body">
-            <h3>Brand &amp; Web Design</h3>
-            <p>Identity systems and bespoke interfaces with an editorial eye — every pixel considered, nothing borrowed.</p>
-          </div>
-          <span class="card__sheen" aria-hidden="true"></span>
-        </article>
-        <article class="card" data-tilt data-reveal>
-          <span class="card__corner card__corner--tl"></span><span class="card__corner card__corner--tr"></span>
-          <span class="card__corner card__corner--bl"></span><span class="card__corner card__corner--br"></span>
-          <span class="card__index">[ 02 ]</span>
-          <div class="card__art card__art--blueprint" aria-hidden="true">
+          <div class="card__art" aria-hidden="true">
             <svg viewBox="0 0 200 200">
               <g class="bp-grid"></g>
-              <g class="bp-draw" fill="none" stroke="url(#g-gold)" stroke-width="1.1">
-                <rect x="34" y="40" width="132" height="120" rx="4" pathLength="1"/>
-                <path d="M34 58 H166" pathLength="1"/>
-                <circle cx="44" cy="49" r="2.4" pathLength="1"/><circle cx="52" cy="49" r="2.4" pathLength="1"/><circle cx="60" cy="49" r="2.4" pathLength="1"/>
-                <path d="M48 78 H112 M48 90 H136 M48 102 H96" pathLength="1"/>
-                <rect x="48" y="116" width="48" height="28" rx="2" pathLength="1"/>
-                <rect x="104" y="116" width="48" height="28" rx="2" pathLength="1"/>
-                <path d="M128 78 l10 8 -10 8" pathLength="1"/>
+              <g class="draw" fill="none" stroke="url(#g-gold)" stroke-width="1.2">
+                <rect x="34" y="44" width="132" height="112" rx="5" pathLength="1"/>
+                <path d="M34 62 H166" pathLength="1"/>
+                <circle cx="45" cy="53" r="2.6" pathLength="1"/><circle cx="54" cy="53" r="2.6" pathLength="1"/><circle cx="63" cy="53" r="2.6" pathLength="1"/>
+                <path d="M48 82 H112 M48 94 H136 M48 106 H96" pathLength="1"/>
+                <rect x="48" y="120" width="46" height="24" rx="2" pathLength="1"/>
+                <rect x="104" y="120" width="48" height="24" rx="2" pathLength="1"/>
               </g>
             </svg>
           </div>
           <div class="card__body">
-            <h3>Engineering</h3>
-            <p>Hand-built, lightning-fast front-ends and a content system your team will actually enjoy using.</p>
+            <h3>Your site</h3>
+            <p>The home base you own. Clear, fast, secure, and yours — not rented from a template.</p>
           </div>
           <span class="card__sheen" aria-hidden="true"></span>
         </article>
+
+        <article class="card" data-tilt data-reveal>
+          <span class="card__corner card__corner--tl"></span><span class="card__corner card__corner--tr"></span>
+          <span class="card__corner card__corner--bl"></span><span class="card__corner card__corner--br"></span>
+          <span class="card__index">[ 02 ]</span>
+          <div class="card__art card__art--pin" aria-hidden="true">
+            <svg viewBox="0 0 200 200">
+              <g class="ripples" fill="none" stroke="url(#g-gold)">
+                <ellipse cx="100" cy="150" rx="22" ry="7"/><ellipse cx="100" cy="150" rx="22" ry="7"/><ellipse cx="100" cy="150" rx="22" ry="7"/>
+              </g>
+              <g class="draw" fill="none" stroke="url(#g-gold)" stroke-width="1.6" stroke-linejoin="round">
+                <path d="M100 40 C78 40 62 56 62 77 C62 104 92 133 98 139 a3 3 0 0 0 4 0 C108 133 138 104 138 77 C138 56 122 40 100 40 Z" pathLength="1"/>
+                <circle cx="100" cy="77" r="14" pathLength="1"/>
+                <path d="M74 168 H126" pathLength="1"/>
+              </g>
+            </svg>
+          </div>
+          <div class="card__body">
+            <h3>Your Google listing</h3>
+            <p>For most local searches, your Google Business Profile is the first thing people see — the map, the hours, the photos that earn the click.</p>
+          </div>
+          <span class="card__sheen" aria-hidden="true"></span>
+        </article>
+
         <article class="card" data-tilt data-reveal>
           <span class="card__corner card__corner--tl"></span><span class="card__corner card__corner--tr"></span>
           <span class="card__corner card__corner--bl"></span><span class="card__corner card__corner--br"></span>
           <span class="card__index">[ 03 ]</span>
-          <div class="card__art card__art--sprout" aria-hidden="true"><svg viewBox="0 0 200 200" data-sprout></svg></div>
+          <div class="card__art card__art--social" aria-hidden="true">
+            <svg viewBox="0 0 200 200">
+              <g class="draw" fill="none" stroke="url(#g-gold)" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round">
+                <path d="M44 52 H122 a8 8 0 0 1 8 8 V100 a8 8 0 0 1 -8 8 H76 L58 122 V108 H44 a8 8 0 0 1 -8 -8 V60 a8 8 0 0 1 8 -8 Z" pathLength="1"/>
+                <path d="M56 72 H110 M56 86 H94" pathLength="1"/>
+                <path d="M142 96 H158 a8 8 0 0 1 8 8 V138 a8 8 0 0 1 -8 8 H152 V158 L138 146 H104 a8 8 0 0 1 -8 -8 V128" pathLength="1"/>
+                <path d="M131 115 c-3 -6 -13 -5 -13 3 c0 6 9 11 13 14 c4 -3 13 -8 13 -14 c0 -8 -10 -9 -13 -3 Z" pathLength="1"/>
+              </g>
+            </svg>
+          </div>
           <div class="card__body">
-            <h3>Growth &amp; Stewardship</h3>
-            <p>SEO, performance tuning and ongoing care — so your site keeps growing long after launch day.</p>
+            <h3>Your social</h3>
+            <p>Consistent, quality posts on Facebook and Instagram that turn followers into paying customers.</p>
+          </div>
+          <span class="card__sheen" aria-hidden="true"></span>
+        </article>
+
+        <article class="card" data-tilt data-reveal>
+          <span class="card__corner card__corner--tl"></span><span class="card__corner card__corner--tr"></span>
+          <span class="card__corner card__corner--bl"></span><span class="card__corner card__corner--br"></span>
+          <span class="card__index">[ 04 ]</span>
+          <div class="card__art" aria-hidden="true"><svg viewBox="0 0 200 200" data-sprout></svg></div>
+          <div class="card__body">
+            <h3>Your local SEO</h3>
+            <p>The work behind the scenes that decides whether you show up at all. Nobody scrolls to page two — we get you onto page one.</p>
           </div>
           <span class="card__sheen" aria-hidden="true"></span>
         </article>
       </div>
+    </div>
+  </section>
+
+  <!-- ============ THE WORK · ruled ledger ============ -->
+  <section class="work" id="work" aria-labelledby="work-title">
+    <div class="wrap">
+      <div class="split-head">
+        <p class="eyebrow" data-reveal>/ The work</p>
+        <div>
+          <h2 class="h2" id="work-title" data-split="words">People we build and tend for.</h2>
+          <p class="lede" data-reveal>Local businesses across Huntsville and North Alabama — the sites we build, host, and tend, and the profiles and feeds we keep current.</p>
+        </div>
+      </div>
+      <ol class="ledger" id="ledger"></ol>
+    </div>
+  </section>
+
+  <!-- ============ THE OFFER · lanes over three tiers ============ -->
+  <section class="offer" id="offer" aria-labelledby="offer-title">
+    <div class="wrap">
+      <div class="split-head">
+        <p class="eyebrow" data-reveal>/ The offer</p>
+        <div>
+          <h2 class="h2" id="offer-title" data-split="words">Pick a lane, or take the lot.</h2>
+          <p class="lede" data-reveal>Websites, Google Business Profile, social, reviews, and custom apps — handled by one partner, on one bill.</p>
+        </div>
+      </div>
+
+      <ul class="lanes">
+        <li data-reveal><h3>Websites</h3><p>Designed, built, and maintained — the home base everything else points back to.</p></li>
+        <li data-reveal><h3>Social</h3><p>Posting and presence on Facebook and Instagram, plus the Google listing and reviews kept current.</p></li>
+        <li data-reveal><h3>Custom apps</h3><p>Software built to fit your work and run on your own hardware — you own the source.</p></li>
+      </ul>
+
+      <p class="tiers__intro" data-reveal>Websites come in three tiers — <span>scoped to what your business actually needs, never a cookie-cutter package.</span></p>
+      <div class="tiers">
+        <article class="tier" data-reveal>
+          <p class="tier__name">Starter</p>
+          <h3 class="tier__title">Get on the map</h3>
+          <p>A focused, polished presence — everything a newer or single-service business needs to look credible and start getting calls.</p>
+          <a class="tier__link" href="mailto:mike@two-oaks-technologies.com?subject=Starter%20website" data-roll>Ask about Starter →</a>
+        </article>
+        <article class="tier tier--featured" data-reveal>
+          <span class="tier__badge">Most chosen</span>
+          <p class="tier__name">Professional</p>
+          <h3 class="tier__title">Room to grow</h3>
+          <p>Services, service areas, and the pages that help you rank and convert — the right fit for most established businesses.</p>
+          <a class="tier__link" href="mailto:mike@two-oaks-technologies.com?subject=Professional%20website" data-roll>Ask about Professional →</a>
+        </article>
+        <article class="tier" data-reveal>
+          <p class="tier__name">Premium</p>
+          <h3 class="tier__title">The full footprint</h3>
+          <p>For a business with a lot to show and a lot to say — built to carry real traffic and do real work.</p>
+          <a class="tier__link" href="mailto:mike@two-oaks-technologies.com?subject=Premium%20website" data-roll>Ask about Premium →</a>
+        </article>
+      </div>
+      <p class="tiers__note" data-reveal>Care plans are monthly and month-to-month — no long contracts, cancel when it stops serving you.</p>
     </div>
   </section>
 
@@ -212,37 +261,67 @@
       <div class="name__copy wrap">
         <h2 class="name__title" id="name-title">
           <span class="line" data-split="chars">Two Oaks.</span>
-          <span class="line" data-split="chars"><em class="gold">One Root.</em></span>
+          <span class="line" data-split="chars"><em class="gold">Two boys.</em></span>
         </h2>
         <div class="name__side">
           <p class="index" data-reveal>( II )<span class="rule"></span>The Name</p>
-          <p data-reveal>A young oak grows beside a mature one — sheltered, taught, strengthened, until it stands tall on its own.</p>
-          <p data-reveal>That is how we work with every client: seasoned craft standing beside your vision. And at the centre of it all, the cross that roots us.</p>
+          <p data-reveal>The two oaks are our two boys, growing side by side. It's why Two Oaks is a family shop, and why we tend your business the way we'd tend our own.</p>
+          <p data-reveal>And at the centre of it all is the cross. Everything here is built on Proverbs 3:5–6.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ============ PROCESS · composition: negantropy-refusal (heading + metric receipt) ============ -->
-  <section class="process" id="process" aria-labelledby="process-title">
-    <div class="wrap">
-      <div class="process__head">
-        <p class="index" data-reveal>( III )<span class="rule"></span>How we grow it</p>
-        <h2 class="h2" id="process-title" data-split="words">From a single seed to something that shades generations.</h2>
+  <!-- ============ WHO YOU'RE HIRING ============ -->
+  <section class="team" id="team" aria-labelledby="team-title">
+    <div class="wrap team__grid">
+      <figure class="team__photo" data-reveal>
+        <img src="assets/img/mike-family.jpg" alt="Mike and Jacqueline Adcock with their two sons." width="900" height="1125" loading="lazy" decoding="async">
+        <figcaption>Mike, Jacqueline, and the two oaks.</figcaption>
+      </figure>
+      <div class="team__copy">
+        <p class="eyebrow" data-reveal>/ Who you're actually hiring</p>
+        <h2 class="h2" id="team-title" data-split="words">You're hiring Mike and Jacqueline. Not a queue.</h2>
+        <p class="lede" data-reveal>Two Oaks is Mike and Jacqueline Adcock, in Huntsville. You get the two of us — on the phone, doing the work, answering when something needs a change. Not a ticket in a queue.</p>
+        <dl class="people">
+          <div data-reveal><dt>Mike</dt><dd>Builds &amp; runs everything — sites, Google, the tech.</dd></div>
+          <div data-reveal><dt>Jacqueline</dt><dd>Runs your social media.</dd></div>
+        </dl>
+        <div class="quotes">
+          <blockquote data-reveal>
+            <p>“Michael paid attention to every detail, made the process easy, and had the site up faster than expected.”</p>
+            <cite>Amber Edwards · Rocket City Nutrition</cite>
+          </blockquote>
+          <blockquote data-reveal>
+            <p>“Mike explains everything well if you are not versed in the tech side, and can create anything you want.”</p>
+            <cite>Kyle Fretwell</cite>
+          </blockquote>
+        </div>
       </div>
-      <ol class="steps">
-        <li class="steps__line" aria-hidden="true"><span></span></li>
-        <li class="step" data-reveal><span class="step__n">01</span><h3>Root</h3><p>Discovery, strategy and listening. We learn your story, your people and what success actually means.</p></li>
-        <li class="step" data-reveal><span class="step__n">02</span><h3>Grow</h3><p>Art direction and design. Moodboards become a bespoke visual language and pixel-perfect pages.</p></li>
-        <li class="step" data-reveal><span class="step__n">03</span><h3>Branch</h3><p>Engineering and motion. Hand-built, accessible code with the animation that makes it feel alive.</p></li>
-        <li class="step" data-reveal><span class="step__n">04</span><h3>Bear Fruit</h3><p>Launch and stewardship. Performance, SEO and care that keep your site flourishing season after season.</p></li>
-      </ol>
-      <dl class="metrics">
-        <div data-reveal><dt><span data-count="100">0</span>%</dt><dd>Custom-designed — never a template</dd></div>
-        <div data-reveal><dt><span data-count="90">0</span>+</dt><dd>Lighthouse performance target</dd></div>
-        <div data-reveal><dt>AA</dt><dd>WCAG accessibility standard</dd></div>
-        <div data-reveal><dt><span data-count="1">0</span>:1</dt><dd>Direct line to your designer</dd></div>
-      </dl>
+    </div>
+  </section>
+
+  <!-- ============ WHO IT'S FOR · marquee ============ -->
+  <section class="industries" id="industries" aria-labelledby="ind-title">
+    <div class="wrap">
+      <div class="split-head">
+        <p class="eyebrow" data-reveal>/ Who it's for</p>
+        <div>
+          <h2 class="h2" id="ind-title" data-split="words">Built for any business.</h2>
+          <p class="lede" data-reveal>From trades to boutiques, if you run it, we can build it. A few of the shops we work with:</p>
+        </div>
+      </div>
+    </div>
+    <div class="marquee" aria-label="Industries we serve">
+      <ul class="marquee__row">
+        <li>Home services &amp; trades</li><li>Healthcare &amp; dental</li><li>Government contractors</li><li>Drink shops &amp; cafés</li><li>Boutiques &amp; retail</li><li>Restaurants</li>
+      </ul>
+      <ul class="marquee__row marquee__row--rev">
+        <li>Realtors</li><li>Law firms</li><li>Fitness &amp; wellness</li><li>Nonprofits</li><li>… and whatever you run</li>
+      </ul>
+    </div>
+    <div class="wrap">
+      <p class="industries__note" data-reveal>Healthcare and dental with <strong>no PHI collected</strong> on the site. Government contractors with <strong>no CUI</strong> anywhere on it. Everyone else, built to fit.</p>
     </div>
   </section>
 
@@ -261,29 +340,32 @@
     <div class="value value--left">
       <span class="value__n" data-reveal>iii.</span>
       <h2 class="value__word" data-split="chars"><em class="gold">Innovation</em></h2>
-      <p class="value__line" data-reveal>that keeps us growing toward the light.</p>
+      <p class="value__line" data-reveal>that keeps your business growing toward the light.</p>
     </div>
   </section>
 
-  <!-- ============ CTA · compositions: negantropy-persist + altitude-cta capsule ============ -->
+  <!-- ============ CTA · compositions: negantropy-persist over the Cannelure gradient ============ -->
   <section class="cta" id="contact" aria-labelledby="cta-title">
     <canvas id="cannelure" aria-hidden="true"></canvas>
     <div class="cta__veil" aria-hidden="true"></div>
     <div class="cta__inner">
-      <p class="index" data-reveal>( VI )<span class="rule"></span>Begin</p>
+      <p class="index" data-reveal>( III )<span class="rule"></span>Get in touch</p>
       <h2 class="cta__title" id="cta-title">
-        <span class="line" data-split="chars">Plant something</span>
-        <span class="line" data-split="chars"><em class="gold">that lasts.</em></span>
+        <span class="line" data-split="chars">One partner, one bill,</span>
+        <span class="line" data-split="chars"><em class="gold">one canopy.</em></span>
       </h2>
-      <p class="cta__body" data-reveal>Tell us a little about your vision. We'll come back with ideas, an honest timeline and a clear path forward.</p>
-      <form class="capsule" id="enquiry" data-reveal novalidate>
-        <label class="sr-only" for="f-name">Your name</label>
-        <input id="f-name" name="name" type="text" placeholder="Your name" autocomplete="name" required>
-        <label class="sr-only" for="f-email">Email address</label>
-        <input id="f-email" name="email" type="email" placeholder="Email address" autocomplete="email" required>
-        <button class="btn btn--solid" type="submit" data-magnetic><span>Start a project</span><i aria-hidden="true">→</i></button>
-      </form>
-      <p class="capsule__note" id="enquiry-note" role="status" aria-live="polite"></p>
+      <p class="cta__body" data-reveal>Start with a free 30-minute audit of your site, your Google listing, and your social.</p>
+      <div class="cta__actions" data-reveal>
+        <a class="btn btn--solid" href="mailto:mike@two-oaks-technologies.com?subject=Free%2030-minute%20audit" data-magnetic><span>Book a free 30-minute audit</span><i aria-hidden="true">→</i></a>
+        <a class="btn btn--ghost" href="sms:+12565290546" data-magnetic><span>Text Mike · 256-529-0546</span></a>
+      </div>
+      <p class="cta__details" data-reveal>
+        <a href="mailto:mike@two-oaks-technologies.com">mike@two-oaks-technologies.com</a>
+        <span aria-hidden="true">·</span>
+        <a href="tel:+12565290546">256-529-0546</a>
+        <span aria-hidden="true">·</span>
+        <span>Huntsville, AL</span>
+      </p>
     </div>
   </section>
 </main>
@@ -291,25 +373,38 @@
 <footer class="footer">
   <div class="wrap footer__top">
     <div class="footer__brand">
-      <svg viewBox="0 0 120 140" aria-hidden="true"><use href="#emblem"/></svg>
-      <p>Premium websites for brands built to endure.</p>
+      <img src="assets/img/emblem.png" alt="" width="560" height="434" loading="lazy">
+      <p>Websites, Google, and social media — managed by one partner. Faith. Family. Innovation.</p>
     </div>
     <div class="footer__cols">
-      <div><h4>Studio</h4><a href="#studio" data-roll>Foundation</a><a href="#craft" data-roll>Craft</a><a href="#process" data-roll>Process</a></div>
-      <div><h4>Connect</h4><a href="#contact" data-roll>Start a project</a><a href="mailto:hello@twooakstechnologies.com" data-roll>Email us</a></div>
+      <div><h4>Services</h4><a href="#services" data-roll>Website design &amp; management</a><a href="#services" data-roll>Social media management</a><a href="#offer" data-roll>Monthly care plans</a><a href="#offer" data-roll>Custom apps</a></div>
+      <div><h4>Company</h4><a href="#industries" data-roll>Who we work with</a><a href="#offer" data-roll>Pricing</a><a href="#team" data-roll>About us</a><a href="#contact" data-roll>Contact</a></div>
+      <div><h4>Service areas</h4><span>Huntsville, AL</span><span>Madison, AL</span><span>Decatur, AL</span></div>
+      <div><h4>Get in touch</h4><a href="tel:+12565290546" data-roll>256-529-0546</a><a href="sms:+12565290546" data-roll>Send a text</a><a href="mailto:mike@two-oaks-technologies.com" data-roll>Email Mike</a><a href="https://www.facebook.com/twooakstech" target="_blank" rel="noopener" data-roll>Facebook</a><a href="https://www.instagram.com/two_oaks_tech/" target="_blank" rel="noopener" data-roll>Instagram</a></div>
     </div>
   </div>
   <div class="footer__mark" aria-hidden="true" data-split="chars">TWO OAKS</div>
   <div class="wrap footer__base">
-    <span>© <span id="year">2026</span> Two Oaks Technologies</span>
-    <span class="gold-ink">Founded on Proverbs 3:5–6</span>
-    <span>Faith. Family. Innovation.</span>
+    <span>© <span id="year">2026</span> Two Oaks Technologies LLC</span>
+    <span>Based in Huntsville, AL · serving the US</span>
+    <span class="gold-ink">Faith. Family. Innovation. · Proverbs 3:5–6</span>
   </div>
 </footer>
 
+<!-- gold gradient shared by the inline SVG art -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="g-gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f1dcaa"/>
+      <stop offset=".45" stop-color="#C4A574"/>
+      <stop offset="1" stop-color="#8d7044"/>
+    </linearGradient>
+  </defs>
+</svg>
+
 <script src="assets/vendor/lenis.min.js" defer></script>
 <script src="assets/js/main.js" defer></script>
-<script type="module" src="assets/js/dust-scene.js"></script>
+<script type="module" src="assets/js/stream.js"></script>
 <script src="assets/js/cannelure.js" defer></script>
 </body>
 </html>

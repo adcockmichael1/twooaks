@@ -3,25 +3,112 @@
   "mode": "build-site (build unique, section by section)",
   "target": "other (static HTML / CSS / JS, no build step)",
   "brief": {
-    "pitch": "Premium website design company. Dark forest green and gold. Shield logo with a cross, a young oak and a mature oak. Faith. Family. Innovation. Founded on Proverbs 3:5-6.",
-    "axes": { "dimensionality": ["3d", "depth"], "mood": ["luxe", "organic"], "tone": ["dark"], "motionEnergy": ["lively"], "density": ["sparse", "balanced"] }
+    "pitch": "Upgrade of two-oaks-technologies.com (Huntsville, AL web/Google/social/apps partner). Dark forest green and gold. Their banner at the top, no vertical grid lines, particles flowing down the screen.",
+    "axes": {
+      "dimensionality": [
+        "3d",
+        "depth"
+      ],
+      "mood": [
+        "luxe",
+        "organic"
+      ],
+      "tone": [
+        "dark"
+      ],
+      "motionEnergy": [
+        "lively"
+      ],
+      "density": [
+        "sparse",
+        "balanced"
+      ]
+    }
   },
   "style": {
     "id": "laocoon-style",
-    "note": "Committed for its type system (Italiana display + Outfit body) and its single-luminous-subject-on-a-dark-field voice. Colour re-dressed to the brand: forest emerald ground, antique gold accent. Tokens live in assets/css/styles.css :root (--gl-*)."
+    "note": "Laocoön type system (Italiana + Outfit) on the current site's palette: forest #08110D, cream #ECE7DA, gold #C4A574. Tokens in assets/css/styles.css :root (--gl-*, --stream-*)."
   },
-  "palettes": { "hero-scene": "halcyon-palette (gold) → overridden in CONFIG to emerald + gold", "cta-gradient": "jade-depths → overridden in CONFIG to emerald + gold" },
-  "fonts": { "display": "Italiana", "body": "Outfit 300/400/500" },
+  "palettes": {
+    "stream": "--stream-* tokens: gold #d9b26a, emerald #3f9e6c, core #fff0c8",
+    "cta-gradient": "jade-depths → overridden in CONFIG to emerald + gold"
+  },
+  "fonts": {
+    "display": "Italiana",
+    "body": "Outfit 300/400/500"
+  },
   "sections": [
-    { "id": "loader",     "composition": "house reveal choreography (design B: no counter)", "asset": "custom emblem line-draw" },
-    { "id": "hero",       "composition": "laocoon-hero",        "asset": "scene: flying-dust (assets/js/dust-scene.js)" },
-    { "id": "foundation", "composition": "artist-statement",    "asset": "scroll-lit verse" },
-    { "id": "craft",      "composition": "vexon-showcase",      "asset": "generative SVG art per card" },
-    { "id": "name",       "composition": "negantropy-entropy",  "asset": "generative SVG oaks grown on scroll" },
-    { "id": "process",    "composition": "negantropy-refusal",  "asset": "drawn timeline + metric receipt" },
-    { "id": "values",     "composition": "clarix-statement",    "asset": "alternating-edge display words" },
-    { "id": "contact",    "composition": "negantropy-persist + altitude-cta", "asset": "gradient: cannelure (assets/js/cannelure.js)" },
-    { "id": "footer",     "composition": "giant wordmark footer", "asset": null }
+    {
+      "id": "loader",
+      "composition": "house reveal choreography (design B: no counter)",
+      "asset": "the client's emblem.png rising out of the ground"
+    },
+    {
+      "id": "hero",
+      "composition": "full-bleed banner, copy split 8|4 at the base",
+      "asset": "client banner (assets/img/hero-banner.webp) + the stream's head"
+    },
+    {
+      "id": "studio",
+      "composition": "artist-statement",
+      "asset": "scroll-lit verse"
+    },
+    {
+      "id": "services",
+      "composition": "vexon-showcase (4 cards)",
+      "asset": "drawn SVG art per card"
+    },
+    {
+      "id": "work",
+      "composition": "ruled ledger on a frosted slab",
+      "asset": "CLIENTS array in main.js"
+    },
+    {
+      "id": "offer",
+      "composition": "lanes over three tiers",
+      "asset": null
+    },
+    {
+      "id": "name",
+      "composition": "negantropy-entropy",
+      "asset": "generative SVG oaks (the two boys) grown on scroll, cross at the centre"
+    },
+    {
+      "id": "team",
+      "composition": "photo | copy split",
+      "asset": "assets/img/mike-family.jpg"
+    },
+    {
+      "id": "industries",
+      "composition": "two counter-running marquees",
+      "asset": null
+    },
+    {
+      "id": "values",
+      "composition": "clarix-statement",
+      "asset": null
+    },
+    {
+      "id": "contact",
+      "composition": "negantropy-persist",
+      "asset": "gradient: cannelure (assets/js/cannelure.js)"
+    },
+    {
+      "id": "footer",
+      "composition": "giant wordmark footer",
+      "asset": null
+    }
   ],
-  "rules": ["One Style per site", "One WebGL scene above the fold", "Tint scenes via CONFIG only — never the shader", "Gate flips at the start of the curtain exit"]
+  "rules": [
+    "One Style per site",
+    "One WebGL scene above the fold (the stream)",
+    "Tint scenes via CONFIG / --stream-* tokens only — never the shader",
+    "Sections carry no opaque fills so the stream reads through",
+    "Gate flips at the start of the curtain exit"
+  ],
+  "scene": {
+    "id": "relay (template) — page-long particle stream",
+    "file": "assets/js/stream.js",
+    "note": "Relay's stream-scene/stream-path/particle-stream lifted verbatim; only the waypoints (anchored to this page's section ids) and a small runtime shim are new. Keep waypoints in document order; renaming a section id straightens the stream."
+  }
 }
